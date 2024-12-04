@@ -13,6 +13,7 @@ export interface Plant {
   name: string;
   growthDuration: number; // Total ticks to reach Harvestable stage
   needWetStateToGrow: CellWetnesState.Dry | CellWetnesState.ReadyToPlant;
+  sellPrice: number;
 }
 
 // PlantedCell extends EmptyCell to include planting functionality
@@ -21,14 +22,17 @@ export class PlantedCell extends EmptyCell {
   currentGrowthStage: PlantGrowthStage = PlantGrowthStage.Seed; // Current growth stage
   ticksSincePlanted: number = 0; // Ticks since the plant was planted
   harvestReady: boolean = false; // Indicates if the plant is ready to harvest
-
+  deletPlantFun: (cellPostion: [number, number]) => void;
+  harvestPlantFun: (plant: Plant, cellPostion: [number, number]) => void;
   constructor(
     rangeOfTiksBeforeGettingReadyToPlant: [number, number],
     rangeOfTiksBeforeGettingDry: [number, number],
     cellPostion: [number, number],
     fieldWetnesState: CellWetnesState,
     // Extenshion
-    plant: Plant
+    plant: Plant,
+    deletPlantCallBack: (cellPostion: [number, number]) => void,
+    harvestCallBack: (plant: Plant, cellPostion: [number, number]) => void
   ) {
     super(
       rangeOfTiksBeforeGettingReadyToPlant,
@@ -37,6 +41,8 @@ export class PlantedCell extends EmptyCell {
       cellPostion
     );
     this.plant = plant;
+    this.deletPlantFun = deletPlantCallBack;
+    this.harvestPlantFun = harvestCallBack;
   }
 
   /**
@@ -44,38 +50,26 @@ export class PlantedCell extends EmptyCell {
    */
   processFieldStateTik(): void {
     super.processFieldStateTik();
+    if (!this.harvestReady) {
+      if (this.fieldWetnesState === this.plant.needWetStateToGrow) {
+        this.ticksSincePlanted++;
 
-    if (
-      this.fieldWetnesState === this.plant.needWetStateToGrow &&
-      !this.harvestReady
-    ) {
-      this.ticksSincePlanted++;
+        // Determine the growth stage based on ticksSincePlanted
+        const growthRatio = this.ticksSincePlanted / this.plant.growthDuration;
 
-      // Determine the growth stage based on ticksSincePlanted
-      const growthRatio = this.ticksSincePlanted / this.plant.growthDuration;
-
-      if (growthRatio >= 1) {
-        this.currentGrowthStage = PlantGrowthStage.Harvestable;
-        this.harvestReady = true;
-      } else if (growthRatio >= 0.75) {
-        this.currentGrowthStage = PlantGrowthStage.Mature;
-      } else if (growthRatio >= 0.5) {
-        this.currentGrowthStage = PlantGrowthStage.Sprout;
+        if (growthRatio >= 1) {
+          this.currentGrowthStage = PlantGrowthStage.Harvestable;
+          this.harvestReady = true;
+        } else if (growthRatio >= 0.75) {
+          this.currentGrowthStage = PlantGrowthStage.Mature;
+        } else if (growthRatio >= 0.5) {
+          this.currentGrowthStage = PlantGrowthStage.Sprout;
+        } else {
+          this.currentGrowthStage = PlantGrowthStage.Seed;
+        }
       } else {
-        this.currentGrowthStage = PlantGrowthStage.Seed;
+        this.deletPlantFun(this.cellPostion);
       }
-    }
-  }
-
-  /**
-   * Harvests the plant if it's ready.
-   */
-  harvestPlant(): boolean {
-    if (this.harvestReady) {
-      console.log(`Harvested ${this.plant.name} from the cell.`);
-      return true;
-    } else {
-      return false;
     }
   }
 }
