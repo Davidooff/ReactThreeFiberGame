@@ -1,73 +1,74 @@
 import getRandomIntInRange from "../../utils/getRandomIntInRange";
 
-enum CellState {
+export enum CellWetnesState {
   Dry,
   Wet,
   ReadyToPlant,
 }
 
 export class EmptyCell {
-  fieldState: CellState; // Current state of the field
-  ticksUntilNextState: number | null = null;
-  rangeOfTicksBeforeGettingReady: [number, number]; // Possible range for becoming ready to plant
-  rangeOfTicksBeforeGettingDry: [number, number]; // Range for drying; null if it can't dry
+  fieldWetnesState: CellWetnesState; // Current state of the field
+  tiksUntilChangingWetnesState: number | null = null; // If null => Field is dry => (fieldWetnesState will not change)
+  rangeOfTiksBeforeGettingReadyToPlant: [number, number]; // Possible range for becoming ready to plant
+  rangeOfTiksBeforeGettingDry: [number, number]; // Range of tiks for drying;
 
   constructor(
-    rangeOfTicksBeforeGettingReady: [number, number],
-    rangeOfTicksBeforeGettingDry: [number, number],
-    fieldState: CellState = CellState.Dry
+    rangeOfTiksBeforeGettingReadyToPlant: [number, number],
+    rangeOfTiksBeforeGettingDry: [number, number],
+    fieldWetnesState: CellWetnesState = CellWetnesState.Dry
   ) {
-    this.rangeOfTicksBeforeGettingReady = rangeOfTicksBeforeGettingReady;
-    this.rangeOfTicksBeforeGettingDry = rangeOfTicksBeforeGettingDry;
-    this.fieldState = fieldState;
+    this.rangeOfTiksBeforeGettingReadyToPlant =
+      rangeOfTiksBeforeGettingReadyToPlant;
+    this.rangeOfTiksBeforeGettingDry = rangeOfTiksBeforeGettingDry;
+    this.fieldWetnesState = fieldWetnesState;
   }
 
-  processFieldStateTick = (): void => {
-    if (this.ticksUntilNextState !== null) {
-      switch (this.fieldState) {
-        case CellState.ReadyToPlant:
-          // Decrement ticks until the field becomes dry
-          this.ticksUntilNextState--;
-          if (this.ticksUntilNextState === 0) {
+  processFieldStateTik(): void {
+    if (this.tiksUntilChangingWetnesState !== null) {
+      switch (this.fieldWetnesState) {
+        case CellWetnesState.ReadyToPlant:
+          // Decrement tiks until the field becomes dry
+          this.tiksUntilChangingWetnesState--;
+          if (this.tiksUntilChangingWetnesState === 0) {
             // Transition to Dry state
-            this.fieldState = CellState.Dry;
-            this.ticksUntilNextState = null;
+            this.fieldWetnesState = CellWetnesState.Dry;
+            this.tiksUntilChangingWetnesState = null;
           }
           break;
 
-        case CellState.Wet:
-          // Decrement ticks until the field becomes ready to plant
-          this.ticksUntilNextState--;
-          if (this.ticksUntilNextState === 0) {
+        case CellWetnesState.Wet:
+          // Decrement tiks until the field becomes ready to plant
+          this.tiksUntilChangingWetnesState--;
+          if (this.tiksUntilChangingWetnesState === 0) {
             // Transition to ReadyToPlant state
-            this.fieldState = CellState.ReadyToPlant;
-            this.ticksUntilNextState = getRandomIntInRange(
-              this.rangeOfTicksBeforeGettingDry
+            this.fieldWetnesState = CellWetnesState.ReadyToPlant;
+            this.tiksUntilChangingWetnesState = getRandomIntInRange(
+              this.rangeOfTiksBeforeGettingDry
             );
           }
           break;
 
-        case CellState.Dry:
+        case CellWetnesState.Dry:
           throw new Error(
-            "Cell state is Dry, but ticksUntilNextState is not null. This is an inconsistent state."
+            "Cell state is Dry, but tiksUntilNextState is not null. This is an inconsistent state."
           );
 
         default:
           throw new Error("Unhandled CellState encountered.");
       }
     }
-  };
+  }
 
   waterTheCell = () => {
-    if (this.fieldState !== CellState.Wet) {
-      if (this.fieldState === CellState.Dry) {
-        this.ticksUntilNextState = getRandomIntInRange(
-          this.rangeOfTicksBeforeGettingReady
+    if (this.fieldWetnesState !== CellWetnesState.Wet) {
+      if (this.fieldWetnesState === CellWetnesState.Dry) {
+        this.tiksUntilChangingWetnesState = getRandomIntInRange(
+          this.rangeOfTiksBeforeGettingReadyToPlant
         );
-        this.fieldState = CellState.Wet;
-      } else if (this.fieldState === CellState.ReadyToPlant) {
-        this.ticksUntilNextState = getRandomIntInRange(
-          this.rangeOfTicksBeforeGettingDry
+        this.fieldWetnesState = CellWetnesState.Wet;
+      } else if (this.fieldWetnesState === CellWetnesState.ReadyToPlant) {
+        this.tiksUntilChangingWetnesState = getRandomIntInRange(
+          this.rangeOfTiksBeforeGettingDry
         );
       }
     }
