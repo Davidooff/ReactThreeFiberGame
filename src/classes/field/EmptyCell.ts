@@ -11,16 +11,19 @@ export class EmptyCell {
   tiksUntilChangingWetnesState: number | null = null; // If null => Field is dry => (fieldWetnesState will not change)
   rangeOfTiksBeforeGettingReadyToPlant: [number, number]; // Possible range for becoming ready to plant
   rangeOfTiksBeforeGettingDry: [number, number]; // Range of tiks for drying;
+  cellPostion: [number, number];
 
   constructor(
     rangeOfTiksBeforeGettingReadyToPlant: [number, number],
     rangeOfTiksBeforeGettingDry: [number, number],
-    fieldWetnesState: CellWetnesState = CellWetnesState.Dry
+    fieldWetnesState: CellWetnesState = CellWetnesState.Dry,
+    cellPostion: [number, number]
   ) {
     this.rangeOfTiksBeforeGettingReadyToPlant =
       rangeOfTiksBeforeGettingReadyToPlant;
     this.rangeOfTiksBeforeGettingDry = rangeOfTiksBeforeGettingDry;
     this.fieldWetnesState = fieldWetnesState;
+    this.cellPostion = cellPostion;
   }
 
   processFieldStateTik(): void {
