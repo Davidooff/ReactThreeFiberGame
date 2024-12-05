@@ -16,8 +16,8 @@ export class EmptyCell {
   constructor(
     rangeOfTiksBeforeGettingReadyToPlant: [number, number],
     rangeOfTiksBeforeGettingDry: [number, number],
-    fieldWetnesState: CellWetnesState = CellWetnesState.Dry,
-    cellPostion: [number, number]
+    cellPostion: [number, number],
+    fieldWetnesState: CellWetnesState = CellWetnesState.Dry
   ) {
     this.rangeOfTiksBeforeGettingReadyToPlant =
       rangeOfTiksBeforeGettingReadyToPlant;

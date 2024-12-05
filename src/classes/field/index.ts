@@ -24,8 +24,8 @@ function createEmptyCell(
   return new EmptyCell(
     FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
     FieldRuels.rangeOfTiksBeforeGettingDry,
-    wet,
-    [position[0], position[1]]
+    [position[0], position[1]],
+    wet
   );
 }
 /** Applying position and chacking is x/y !< 0 */
@@ -72,17 +72,18 @@ export class Field {
     if (field) {
       this.field = field;
     } else if (size) {
-      this.field = Array(size[0]).map((_, i0) =>
-        Array(size[1]).map(
+      this.field = Array.from({ length: size[0] }, (_, i0) =>
+        Array.from(
+          { length: size[1] },
           (_, i1) =>
             new EmptyCell(
               FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
               FieldRuels.rangeOfTiksBeforeGettingDry,
-              _,
               [i0, i1]
             )
         )
       );
+      console.log(this.field);
     } else
       throw Error(
         "U need to give size or field (Array<EmptyCell | PlantedCell>[])"
@@ -99,7 +100,9 @@ export class Field {
   }
 
   /** calling processFieldStateTik in each this.field element */
-  _processTik() {
+  processTik() {
+    console.log(this.field);
+
     this.field.forEach((fieldRow) =>
       fieldRow.forEach((fieldRowEl) => fieldRowEl.processFieldStateTik())
     );
@@ -123,7 +126,7 @@ export class Field {
     }
 
     this.playerPosition = nextPossition;
-    this._processTik();
+    this.processTik();
   }
 
   /** returning amount of monney made by harvesting courent field, changing courent cell to EmptyCell (Err !possible) */
@@ -148,5 +151,9 @@ export class Field {
       );
 
     return monneyToAdd;
+  }
+
+  water() {
+    this.field[this.playerPosition[0]][this.playerPosition[1]].waterTheCell();
   }
 }

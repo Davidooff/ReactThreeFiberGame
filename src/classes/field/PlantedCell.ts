@@ -37,8 +37,8 @@ export class PlantedCell extends EmptyCell {
     super(
       rangeOfTiksBeforeGettingReadyToPlant,
       rangeOfTiksBeforeGettingDry,
-      fieldWetnesState,
-      cellPostion
+      cellPostion,
+      fieldWetnesState
     );
     this.plant = plant;
     this.deletPlantFun = deletPlantCallBack;
