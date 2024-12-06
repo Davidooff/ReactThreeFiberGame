@@ -1,17 +1,12 @@
 import { useRef, useState, useEffect, useMemo } from "react";
-import {
-  OrbitControls,
-  OrthographicCamera,
-  PerspectiveCamera,
-} from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Field } from "../../classes/field";
-import { EmptyCell } from "../../classes/field/EmptyCell";
-import { PlantedCell } from "../../classes/field/PlantedCell";
+import { Field } from "../../classes/game/field";
+import { EmptyCell } from "../../classes/game/field/EmptyCell";
+import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import DisplayCell from "./DisplayCell";
 import "./field.css";
-import { Vector3 } from "three";
 import CameraSetup from "./CameraSetUp";
+import DisplayPlayer from "./DisplayPlayer";
 
 function DisplayField() {
   const fieldRef = useRef<Field>();
@@ -57,6 +52,13 @@ function DisplayField() {
     );
   }, [fieldData]);
 
+  const playerComponent = useMemo(() => {
+    if (fieldRef.current) {
+      return DisplayPlayer({ playerPosition: fieldRef.current.playerPosition });
+    }
+    return <></>;
+  }, [fieldData]);
+
   return (
     <div id="CanvasDiv">
       <Canvas>
@@ -64,6 +66,7 @@ function DisplayField() {
         <ambientLight intensity={0.6} />
         <directionalLight position={[-5, 5, -5]} color="white" />
         {fieldComponents}
+        {playerComponent}
       </Canvas>
     </div>
   );

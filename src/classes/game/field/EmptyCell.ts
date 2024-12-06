@@ -1,4 +1,4 @@
-import getRandomIntInRange from "../../utils/getRandomIntInRange";
+import getRandomIntInRange from "../../../utils/getRandomIntInRange";
 
 export enum CellWetnesState {
   Dry,

@@ -1,20 +1,5 @@
+import { Plant, PlantGrowthStage } from "../../../data/plants";
 import { EmptyCell, CellWetnesState } from "./EmptyCell"; // Adjust the import path as needed
-
-// Enum representing different growth stages of a plant
-export enum PlantGrowthStage {
-  Seed,
-  Sprout,
-  Mature,
-  Harvestable,
-}
-
-// Interface for plant types (extend as needed)
-export interface Plant {
-  name: string;
-  growthDuration: number; // Total ticks to reach Harvestable stage
-  needWetStateToGrow: CellWetnesState.Dry | CellWetnesState.ReadyToPlant;
-  sellPrice: number;
-}
 
 // PlantedCell extends EmptyCell to include planting functionality
 export class PlantedCell extends EmptyCell {

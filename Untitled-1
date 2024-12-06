@@ -1,0 +1,10 @@
+
+game - constructor(field?, achivments?, unlocks)
+  | field - |constructor([plant || size])
+  |         |-field[PlantedCell|EmptyCell[]]
+  |         |-player-postion
+  |         |-remove-plant()
+  |         |-set-plant()
+  | 
+  | unlocks {}
+  

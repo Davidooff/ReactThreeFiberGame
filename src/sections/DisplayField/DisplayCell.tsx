@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { EmptyCell } from "../../classes/field/EmptyCell";
-import { PlantedCell } from "../../classes/field/PlantedCell";
+import { EmptyCell } from "../../classes/game/field/EmptyCell";
+import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import convert2dPossition from "../../utils/convert2dPossition";
 
 interface Props {
