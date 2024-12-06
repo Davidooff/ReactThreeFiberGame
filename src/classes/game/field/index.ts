@@ -1,7 +1,8 @@
+import { Plant } from "../../../data/plants";
 import { CellWetnesState, EmptyCell } from "./EmptyCell";
 import { PlantedCell } from "./PlantedCell";
 
-enum Dir {
+export enum Dir {
   Up,
   Right,
   Down,
@@ -155,5 +156,33 @@ export class Field {
 
   water() {
     this.field[this.playerPosition[0]][this.playerPosition[1]].waterTheCell();
+  }
+
+  deletPlant(position: [number, number] = this.playerPosition) {
+    const [x, y] = position;
+    this.field[x][y] = new EmptyCell(
+      FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
+      FieldRuels.rangeOfTiksBeforeGettingDry,
+      [x, y],
+      this.field[x][y].fieldWetnesState
+    );
+  }
+
+  plant(plant: Plant) {
+    const [x, y] = this.playerPosition;
+    if (this.field[x][y] instanceof PlantedCell) {
+      throw new Error("Cell is not empty, can't plant");
+    }
+
+    this.field[x][y] = new PlantedCell(
+      FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
+      FieldRuels.rangeOfTiksBeforeGettingDry,
+      [x, y],
+      this.field[x][y].fieldWetnesState,
+      plant,
+      () => {
+        this.deletPlant([x, y]);
+      }
+    );
   }
 }

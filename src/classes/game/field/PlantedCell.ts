@@ -8,7 +8,6 @@ export class PlantedCell extends EmptyCell {
   ticksSincePlanted: number = 0; // Ticks since the plant was planted
   harvestReady: boolean = false; // Indicates if the plant is ready to harvest
   deletPlantFun: (cellPostion: [number, number]) => void;
-  harvestPlantFun: (plant: Plant, cellPostion: [number, number]) => void;
   constructor(
     rangeOfTiksBeforeGettingReadyToPlant: [number, number],
     rangeOfTiksBeforeGettingDry: [number, number],
@@ -16,8 +15,7 @@ export class PlantedCell extends EmptyCell {
     fieldWetnesState: CellWetnesState,
     // Extenshion
     plant: Plant,
-    deletPlantCallBack: (cellPostion: [number, number]) => void,
-    harvestCallBack: (plant: Plant, cellPostion: [number, number]) => void
+    deletPlantCallBack: (cellPostion: [number, number]) => void
   ) {
     super(
       rangeOfTiksBeforeGettingReadyToPlant,
@@ -27,7 +25,6 @@ export class PlantedCell extends EmptyCell {
     );
     this.plant = plant;
     this.deletPlantFun = deletPlantCallBack;
-    this.harvestPlantFun = harvestCallBack;
   }
 
   /**
