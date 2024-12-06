@@ -1,6 +1,6 @@
 import unlocksData, { UnlockEl, UnlocksTree } from "../../../data/unlocks";
 
-class unlocks {
+class Unlocks {
   unlocksTree: UnlocksTree;
 
   constructor(unlocksTree?: UnlocksTree) {
@@ -72,14 +72,25 @@ class unlocks {
             isUnlockComplite = true;
             break;
           } else {
-            /**
-             * adding + 1 to last element for it will be chacked in the next cicle
-             * if there is no element there in next cycle it will skip to next possible roud
-             */
-            path[path.length - 1]++;
+            if ("nextUnlocks" in unlockByPath && unlockByPath.isUnlocked) {
+              /** If there is more elements inside and path to check it */
+              path.push(0);
+            } else {
+              /**
+               * adding + 1 to last element for it will be chacked in the next cicle
+               * if there is no element there in next cycle it will skip to next possible roud
+               */
+              path[path.length - 1]++;
+            }
           }
         }
       }
+    }
+
+    if (!isUnlockComplite) {
+      throw new Error(
+        "Element whit this name not found or it's imposible to unlock"
+      );
     }
   }
 
@@ -107,3 +118,5 @@ class unlocks {
     }
   }
 }
+
+export default Unlocks;
