@@ -1,14 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react";
 import Game from "../../classes/game";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import { EmptyCell } from "../../classes/game/field/EmptyCell";
-import DisplayPlayer from "../../sections/DisplayField/DisplayPlayer";
-import DisplayCell from "../../sections/DisplayField/DisplayCell";
 import DisplayField from "../../sections/DisplayField";
+import CodePanel from "../../sections/DisplayField/CodePanel";
+import "./game.css";
 
 function GamePage() {
   const gameRef = useRef<Game>();
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
+  const [code, setCode] = useState<string[]>([""]);
   const [fieldData, setFieldData] = useState<Array<EmptyCell | PlantedCell>[]>(
     []
   );
@@ -25,8 +26,8 @@ function GamePage() {
     if (isExecuting) {
       intervalId = setInterval(() => {
         if (gameRef.current) {
-          gameRef.current.execute();
-          setFieldData({ ...gameRef.current.field.field });
+          gameRef.current.execute(code.join("\n"));
+          setFieldData([...gameRef.current.field.field]);
         }
       }, 1000);
     } else {
@@ -47,6 +48,16 @@ function GamePage() {
     [fieldData]
   );
 
-  return <div>{fieldSection}</div>;
+  return (
+    <div id="Game">
+      {fieldSection}
+      <CodePanel
+        code={code}
+        setCode={setCode}
+        isExecuting={isExecuting}
+        setIsExecuting={setIsExecuting}
+      />
+    </div>
+  );
 }
 export default GamePage;

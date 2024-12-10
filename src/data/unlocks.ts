@@ -5,26 +5,38 @@ export interface UnlockEl {
   description: string;
   cost: number;
   isUnlocked: boolean;
-  unlock: Plant;
 }
 
-export interface UnlocksTree extends UnlockEl {
-  nextUnlocks?: UnlocksTree[] | UnlockEl[];
+export interface PlantUnlockEl extends UnlockEl {
+  unlockPlant: Plant;
+}
+
+export interface FieldExtendEl extends UnlockEl {
+  extend: [number, number]; // Adding [x+extend[0]][y+extend[1]]
+}
+
+export type UnlockType = PlantUnlockEl | FieldExtendEl;
+
+export interface UnlocksTree {
+  unlock: UnlockType;
+  nextUnlocks?: Array<UnlocksTree | UnlockType>;
 }
 
 const unlocksData: UnlocksTree = {
-  title: "BIG START",
-  description: "That's the place where everything is starts",
-  cost: 10,
-  isUnlocked: false,
-  unlock: plantsData[0],
+  unlock: {
+    title: "BIG START",
+    description: "That's the place where everything is starts",
+    cost: 10,
+    isUnlocked: false,
+    unlockPlant: plantsData[0],
+  },
   nextUnlocks: [
     {
       title: "SOMTHING FAMILIAR",
       description: "Let's continue",
       cost: 20,
       isUnlocked: false,
-      unlock: plantsData[1],
+      unlockPlant: plantsData[1],
     },
   ],
 };

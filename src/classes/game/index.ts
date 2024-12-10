@@ -1,5 +1,5 @@
 import { Plant } from "../../data/plants";
-import { UnlockEl } from "../../data/unlocks";
+import { PlantUnlockEl } from "../../data/unlocks";
 import { Dir, Field } from "./field";
 import { EmptyCell } from "./field/EmptyCell";
 import { PlantedCell } from "./field/PlantedCell";
@@ -75,7 +75,7 @@ class Game {
     }
   }
 
-  getPossibleUnlocks(): UnlockEl[] {
+  getPossibleUnlocks(): PlantUnlockEl[] {
     return this.unlocks.getPossibleToUnlock();
   }
 
@@ -113,13 +113,13 @@ class Game {
     else throw new Error("Player function not deffined");
   }
 
-  execute(code?: string) {
-    if (code) {
+  execute(code: string) {
+    if (code != this.playerCode) {
       this.playerCode = code;
-      this.playerFunction = new Function();
+      this.playerFunction = this.createUserFunction();
     }
-
-    this._runFunctionWithClassMethods();
+    eval(this.playerCode);
+    // this._runFunctionWithClassMethods();
   }
 }
 

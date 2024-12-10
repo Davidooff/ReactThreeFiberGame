@@ -1,0 +1,16 @@
+.code-panel {
+  width: 50vw;
+  height: 100vh;
+  overflow: scroll;
+  padding: 20px;
+}
+
+.code-el-wrapper {
+  position: relative;
+}
+
+.code-el-wrapper .close-el {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

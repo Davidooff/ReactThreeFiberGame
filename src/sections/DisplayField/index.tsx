@@ -14,20 +14,8 @@ interface Props {
 }
 
 function DisplayField(props: Props) {
-  // const fieldComponents = useMemo(() => {
-  //   return fieldData.flatMap((row, x) =>
-  //     row.map((fieldCell, y) => (
-  //       <DisplayCell key={`cell-${x}-${y}`} fieldCell={fieldCell} />
-  //     ))
-  //   );
-  // }, [fieldData]);
-
-  // const playerComponent = useMemo(() => {
-  //   if (fieldRef.current) {
-  //     return DisplayPlayer({ playerPosition: fieldRef.current.playerPosition });
-  //   }
-  //   return <></>;
-  // }, [fieldData]);
+  console.log("Field Data: ", props.fieldData);
+  console.log("Possition: ", props.playerPosition);
 
   return (
     <div id="CanvasDiv">

@@ -114,8 +114,8 @@ export class Field {
     return (
       position[0] < this.fieldSize[0] &&
       position[1] < this.fieldSize[1] &&
-      position[0] > 0 &&
-      position[1] > 0
+      position[0] >= 0 &&
+      position[1] >= 0
     );
   }
 
@@ -123,7 +123,12 @@ export class Field {
   move(direction: Dir): void {
     let nextPossition = applyDirToPosition(this.playerPosition, direction);
     if (!this._isItPossiblePosition(nextPossition)) {
-      throw new Error("Position to move, out of field size range");
+      throw new Error(
+        "Position to move, out of field size range" +
+          nextPossition +
+          this.fieldSize +
+          this._isItPossiblePosition(nextPossition)
+      );
     }
 
     this.playerPosition = nextPossition;
