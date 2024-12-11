@@ -51,7 +51,7 @@ function GamePage() {
 
   return (
     <>
-      {/* <div id="Game">
+      <div id="Game">
         {fieldSection}
         <CodePanel
           code={code}
@@ -59,7 +59,7 @@ function GamePage() {
           isExecuting={isExecuting}
           setIsExecuting={setIsExecuting}
         />
-      </div> */}
+      </div>
       {gameRef.current && (
         <DisplaySkills tree={gameRef.current.unlocks.skillTree} />
       )}
