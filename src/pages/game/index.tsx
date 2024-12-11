@@ -5,6 +5,7 @@ import { EmptyCell } from "../../classes/game/field/EmptyCell";
 import DisplayField from "../../sections/DisplayField";
 import CodePanel from "../../sections/DisplayField/CodePanel";
 import "./game.css";
+import DisplaySkills from "../../sections/DisplaySkills";
 
 function GamePage() {
   const gameRef = useRef<Game>();
@@ -49,15 +50,20 @@ function GamePage() {
   );
 
   return (
-    <div id="Game">
-      {fieldSection}
-      <CodePanel
-        code={code}
-        setCode={setCode}
-        isExecuting={isExecuting}
-        setIsExecuting={setIsExecuting}
-      />
-    </div>
+    <>
+      {/* <div id="Game">
+        {fieldSection}
+        <CodePanel
+          code={code}
+          setCode={setCode}
+          isExecuting={isExecuting}
+          setIsExecuting={setIsExecuting}
+        />
+      </div> */}
+      {gameRef.current && (
+        <DisplaySkills tree={gameRef.current.unlocks.skillTree} deeps={0} />
+      )}
+    </>
   );
 }
 export default GamePage;

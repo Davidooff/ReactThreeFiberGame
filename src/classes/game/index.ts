@@ -1,9 +1,9 @@
 import { Plant } from "../../data/plants";
-import { PlantUnlockEl } from "../../data/unlocks";
+import { myTree } from "../../data/skills";
 import { Dir, Field } from "./field";
 import { EmptyCell } from "./field/EmptyCell";
 import { PlantedCell } from "./field/PlantedCell";
-import Unlocks from "./unlocks";
+import Skills from "./skills";
 
 const gameRuels = {
   waterCost: 1,
@@ -12,7 +12,7 @@ const gameRuels = {
 class Game {
   money: number = 100;
   field = new Field([10, 10]);
-  unlocks = new Unlocks();
+  unlocks = new Skills(myTree);
   playerCode: string = "";
   /** Function(
       move,
@@ -59,26 +59,6 @@ class Game {
     this.field.deletPlant();
   }
 
-  unlock(unlockTitle: string) {
-    let possibleUnlocks = this.unlocks.getPossibleToUnlock();
-    let toUnlock = possibleUnlocks.find((el) => el.title === unlockTitle);
-
-    if (!toUnlock) {
-      throw new Error("Wrong name, or unlock unable to unlock");
-    }
-
-    if (this.money >= toUnlock.cost) {
-      this.money -= toUnlock.cost;
-      this.unlocks.unlock(toUnlock.title);
-    } else {
-      throw new Error("Not enough money");
-    }
-  }
-
-  getPossibleUnlocks(): PlantUnlockEl[] {
-    return this.unlocks.getPossibleToUnlock();
-  }
-
   water() {
     if (this.money >= gameRuels.waterCost) {
       this.money -= gameRuels.waterCost;
@@ -103,8 +83,8 @@ class Game {
         this.move,
         this.plant,
         this.removePlant,
-        this.unlock,
-        this.getPossibleUnlocks,
+        // this.unlock,
+        // this.getPossibleUnlocks,
         this.water,
         this.getCurentCell,
         this.getMonney,
