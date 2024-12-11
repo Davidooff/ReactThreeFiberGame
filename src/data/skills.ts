@@ -4,8 +4,30 @@ export const myTree: SkillTree<MySkillData> = {
     {
       skill: { name: "ChildSkill1", isUnlocked: false },
       nextSkills: [
-        { name: "GrandChildSkill1", isUnlocked: false },
-        { name: "GrandChildSkill2", isUnlocked: false },
+        {
+          skill: { name: "GrandChildSkill2", isUnlocked: false },
+          nextSkills: [
+            {
+              skill: { name: "SuperGrandChildSkill1", isUnlocked: false },
+              nextSkills: [
+                { name: "SuperPuperChildSkill1", isUnlocked: false },
+                { name: "SuperPuperChildSkill2", isUnlocked: false },
+                { name: "SuperPuperChildSkill3", isUnlocked: false },
+                { name: "SuperPuperChildSkill4", isUnlocked: false },
+              ],
+            },
+            { name: "SuperGrandChildSkill2", isUnlocked: false },
+            { name: "SuperGrandChildSkill3", isUnlocked: false },
+            { name: "SuperGrandChildSkill4", isUnlocked: false },
+          ],
+        },
+        {
+          skill: { name: "GrandChildSkill2", isUnlocked: false },
+          nextSkills: [
+            { name: "SuperGrandChildSkill1", isUnlocked: false },
+            { name: "SuperGrandChildSkill2", isUnlocked: false },
+          ],
+        },
       ],
     },
     { name: "ChildSkill2", isUnlocked: false },

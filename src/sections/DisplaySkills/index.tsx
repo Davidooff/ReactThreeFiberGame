@@ -1,87 +1,61 @@
+import { useEffect, useRef } from "react";
 import { MySkillData, SkillTree } from "../../data/skills";
+import "./displaySkills.css";
+import DisplayTree from "./DisplayTree";
+import createLineByDOM from "../../utils/createLineByDOM";
 
 interface Props {
   tree: SkillTree<MySkillData> | MySkillData;
-  deeps: number;
 }
 
-function isSkillTree(
-  node: SkillTree<MySkillData> | MySkillData
-): node is SkillTree<MySkillData> {
-  return (node as SkillTree<MySkillData>).skill !== undefined;
-}
+// Refined isElement function acting as a type guard
+const isElement = (node: ChildNode | null): node is Element =>
+  node !== null && node.nodeType === 1;
 
 function DisplaySkills(props: Props) {
-  console.log(props);
+  const treeRef = useRef<HTMLDivElement>(null);
 
-  return (
-    <>
-      {isSkillTree(props.tree) ? (
-        <div className="skill-group">
-          <CreateSkillEl
-            skill={props.tree.skill}
-            deeps={props.deeps}
-            xPosition={0}
-          />
-          <div className="skill-next">
-            {props.tree.nextSkills.map((el, index) => {
-              if (isSkillTree(el)) {
-                return (
-                  <div className="skill-group">
-                    <CreateSkillEl
-                      skill={el.skill}
-                      deeps={props.deeps}
-                      xPosition={index}
-                    />
-                    <div className="skill-next">
-                      {el.nextSkills.map((el) => (
-                        <DisplaySkills tree={el} deeps={props.deeps + 1} />
-                      ))}
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="skill-next">
-                    <CreateSkillEl
-                      skill={el}
-                      deeps={props.deeps}
-                      xPosition={index}
-                    />
-                  </div>
-                );
-              }
-            })}
-          </div>
-        </div>
-      ) : (
-        <CreateSkillEl skill={props.tree} deeps={props.deeps} xPosition={0} />
-      )}
-      {/* {() => {
-        if (isSkillTree(props.tree)) {
-          
+  useEffect(() => {
+    if (treeRef.current) {
+      const elements = document.getElementsByClassName("skill-group");
+      for (let i = 0; i < elements.length; i++) {
+        console.log(elements.length);
+
+        const skillGroupEl = elements.item(i);
+        if (skillGroupEl) {
+          const firstElement = isElement(skillGroupEl.firstChild)
+            ? skillGroupEl.firstChild
+            : null;
+          const seccondElement = skillGroupEl.childNodes[1].childNodes;
+          if (!firstElement || !seccondElement) {
+            console.error("First or last child not found!");
+            continue; // Use 'continue' to process remaining elements instead of 'return'
+          }
+
+          // Obtain bounding boxes
+          const firstRect = firstElement.getBoundingClientRect();
+          seccondElement.forEach((el) => {
+            if (isElement(el)) {
+              const seccondRect = el.getBoundingClientRect();
+
+              const lineDiv = createLineByDOM(
+                firstRect.right,
+                (firstRect.top + firstRect.bottom) / 2,
+                seccondRect.left,
+                (seccondRect.top + seccondRect.bottom) / 2
+              );
+
+              skillGroupEl.append(lineDiv);
+            }
+          });
         }
-      }} */}
-    </>
-  );
-}
-
-interface CreateSkillElProps {
-  skill: MySkillData;
-  deeps: number;
-  xPosition: number;
-}
-
-function CreateSkillEl(props: CreateSkillElProps) {
-  const { skill, deeps, xPosition } = props;
-  return (
-    <div
-      className={
-        "skill-el " + "skill-el-" + (skill.isUnlocked ? "unlocked" : "locked")
       }
-      // style={{ top: xPosition * 20 + "px", left: deeps * 100 + "px" }}
-    >
-      <h5>{skill.name}</h5>
+    }
+  }, []); // Removed 'treeRef' from dependencies as refs do not trigger re-renders
+
+  return (
+    <div ref={treeRef}>
+      <DisplayTree tree={props.tree} deeps={0} />
     </div>
   );
 }

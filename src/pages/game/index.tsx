@@ -61,7 +61,7 @@ function GamePage() {
         />
       </div> */}
       {gameRef.current && (
-        <DisplaySkills tree={gameRef.current.unlocks.skillTree} deeps={0} />
+        <DisplaySkills tree={gameRef.current.unlocks.skillTree} />
       )}
     </>
   );

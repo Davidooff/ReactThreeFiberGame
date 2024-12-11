@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import GamePage from "./pages/game/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <GamePage />
-  </StrictMode>
+  // <StrictMode>
+  <GamePage />
+  // </StrictMode>
 );
