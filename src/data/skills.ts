@@ -1,41 +1,120 @@
+import wheat from "../assets/skills/wheat.png";
+
 export const myTree: SkillTree<MySkillData> = {
-  skill: { name: "RootSkill", isUnlocked: false },
+  skill: {
+    name: "RootSkill",
+    isUnlocked: false,
+    img: wheat,
+    description: "Some text to make it look alive",
+  },
   nextSkills: [
     {
-      skill: { name: "ChildSkill1", isUnlocked: false },
+      skill: {
+        name: "ChildSkill1",
+        isUnlocked: false,
+        img: wheat,
+        description: "Some text to make it look alive",
+      },
       nextSkills: [
         {
-          skill: { name: "GrandChildSkill2", isUnlocked: false },
+          skill: {
+            name: "GrandChildSkill2",
+            isUnlocked: false,
+            img: wheat,
+            description: "Some text to make it look alive",
+          },
           nextSkills: [
             {
-              skill: { name: "SuperGrandChildSkill1", isUnlocked: false },
+              skill: {
+                name: "SuperGrandChildSkill1",
+                isUnlocked: false,
+                img: wheat,
+                description: "Some text to make it look alive",
+              },
               nextSkills: [
-                { name: "SuperPuperChildSkill1", isUnlocked: false },
-                { name: "SuperPuperChildSkill2", isUnlocked: false },
-                { name: "SuperPuperChildSkill3", isUnlocked: false },
-                { name: "SuperPuperChildSkill4", isUnlocked: false },
+                {
+                  name: "SuperPuperChildSkill1",
+                  isUnlocked: false,
+                  img: wheat,
+                  description: "Some text to make it look alive",
+                },
+                {
+                  name: "SuperPuperChildSkill2",
+                  isUnlocked: false,
+                  img: wheat,
+                  description: "Some text to make it look alive",
+                },
+                {
+                  name: "SuperPuperChildSkill3",
+                  isUnlocked: false,
+                  img: wheat,
+                  description: "Some text to make it look alive",
+                },
+                {
+                  name: "SuperPuperChildSkill4",
+                  isUnlocked: false,
+                  img: wheat,
+                  description: "Some text to make it look alive",
+                },
               ],
             },
-            { name: "SuperGrandChildSkill2", isUnlocked: false },
-            { name: "SuperGrandChildSkill3", isUnlocked: false },
-            { name: "SuperGrandChildSkill4", isUnlocked: false },
+            {
+              name: "SuperGrandChildSkill2",
+              isUnlocked: false,
+              img: wheat,
+              description: "Some text to make it look alive",
+            },
+            {
+              name: "SuperGrandChildSkill3",
+              isUnlocked: false,
+              img: wheat,
+              description: "Some text to make it look alive",
+            },
+            {
+              name: "SuperGrandChildSkill4",
+              isUnlocked: false,
+              img: wheat,
+              description: "Some text to make it look alive",
+            },
           ],
         },
         {
-          skill: { name: "GrandChildSkill2", isUnlocked: false },
+          skill: {
+            name: "GrandChildSkill2",
+            isUnlocked: false,
+            img: wheat,
+            description: "Some text to make it look alive",
+          },
           nextSkills: [
-            { name: "SuperGrandChildSkill1", isUnlocked: false },
-            { name: "SuperGrandChildSkill2", isUnlocked: false },
+            {
+              name: "SuperGrandChildSkill1",
+              isUnlocked: false,
+              img: wheat,
+              description: "Some text to make it look alive",
+            },
+            {
+              name: "SuperGrandChildSkill2",
+              isUnlocked: false,
+              img: wheat,
+              description: "Some text to make it look alive",
+            },
           ],
         },
       ],
     },
-    { name: "ChildSkill2", isUnlocked: false },
+    {
+      name: "ChildSkill2",
+      isUnlocked: false,
+      img: wheat,
+      description: "Some text to make it look alive",
+    },
   ],
 };
 
 export interface MySkillData extends UnlockData {
   name: string;
+  img: string;
+  description: string;
 }
 
 export interface UnlockData {

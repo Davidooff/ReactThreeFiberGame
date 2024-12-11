@@ -1,5 +1,32 @@
+.skills {
+  position: static;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.271);
+  display: inline-flex;
+}
+
+.skills {
+  overflow: scroll;
+  width: 100vw;
+}
+
 .skill-el {
   padding-block: 5px;
+  background-color: black;
+  border-radius: 20px;
+  width: 320px;
+  min-width: 320px;
+  display: flex;
+}
+
+.skill-el img {
+  width: 64px;
+  object-fit: contain;
+}
+
+.skill-el p {
+  margin-top: 20px;
+  font-weight: 200;
 }
 
 .skill-group {
@@ -14,6 +41,10 @@
   display: flex;
   flex-direction: column;
   justify-content: left;
+}
+
+.skill-next .skill-el {
+  margin-block: 10px;
 }
 
 .line-to-top div:last-child {

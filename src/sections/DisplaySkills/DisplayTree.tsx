@@ -13,21 +13,13 @@ function DisplayTree(props: Props) {
     <>
       {isSkillTree(props.tree) ? (
         <div className="skill-group">
-          <CreateSkillEl
-            skill={props.tree.skill}
-            deeps={props.deeps}
-            xPosition={0}
-          />
+          <CreateSkillEl skill={props.tree.skill} />
           <div className="skill-next">
-            {props.tree.nextSkills.map((el, index) => {
+            {props.tree.nextSkills.map((el) => {
               if (isSkillTree(el)) {
                 return (
                   <div className="skill-group">
-                    <CreateSkillEl
-                      skill={el.skill}
-                      deeps={props.deeps}
-                      xPosition={index}
-                    />
+                    <CreateSkillEl skill={el.skill} />
                     <div className="skill-next">
                       {el.nextSkills.map((el) => (
                         <DisplayTree tree={el} deeps={props.deeps + 1} />
@@ -36,19 +28,13 @@ function DisplayTree(props: Props) {
                   </div>
                 );
               } else {
-                return (
-                  <CreateSkillEl
-                    skill={el}
-                    deeps={props.deeps}
-                    xPosition={index}
-                  />
-                );
+                return <CreateSkillEl skill={el} />;
               }
             })}
           </div>
         </div>
       ) : (
-        <CreateSkillEl skill={props.tree} deeps={props.deeps} xPosition={0} />
+        <CreateSkillEl skill={props.tree} />
       )}
     </>
   );

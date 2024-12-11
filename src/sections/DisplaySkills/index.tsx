@@ -15,46 +15,62 @@ const isElement = (node: ChildNode | null): node is Element =>
 function DisplaySkills(props: Props) {
   const treeRef = useRef<HTMLDivElement>(null);
 
+  const handleResize = () => {
+    const cleanUp = document.getElementsByClassName("line");
+    while (cleanUp.length > 0) {
+      cleanUp.item(0)?.remove();
+    }
+
+    const elements = document.getElementsByClassName("skill-group");
+    for (let i = 0; i < elements.length; i++) {
+      console.log(elements.length);
+
+      const skillGroupEl = elements.item(i);
+      if (skillGroupEl) {
+        const firstElement = isElement(skillGroupEl.firstChild)
+          ? skillGroupEl.firstChild
+          : null;
+        const seccondElement = skillGroupEl.childNodes[1].childNodes;
+        if (!firstElement || !seccondElement) {
+          console.error("First or last child not found!");
+          continue; // Use 'continue' to process remaining elements instead of 'return'
+        }
+
+        // Obtain bounding boxes
+        const firstRect = firstElement.getBoundingClientRect();
+        seccondElement.forEach((el) => {
+          if (isElement(el)) {
+            const seccondRect = el.getBoundingClientRect();
+
+            const lineDiv = createLineByDOM(
+              firstRect.right + window.scrollX,
+              (firstRect.top + firstRect.bottom) / 2 + window.scrollY,
+              seccondRect.left + window.scrollX,
+              (seccondRect.top + seccondRect.bottom) / 2 + window.scrollY
+            );
+
+            skillGroupEl.append(lineDiv);
+          }
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (treeRef.current) {
-      const elements = document.getElementsByClassName("skill-group");
-      for (let i = 0; i < elements.length; i++) {
-        console.log(elements.length);
+      setTimeout(() => {
+        handleResize();
+      }, 10);
+      window.addEventListener("resize", handleResize);
 
-        const skillGroupEl = elements.item(i);
-        if (skillGroupEl) {
-          const firstElement = isElement(skillGroupEl.firstChild)
-            ? skillGroupEl.firstChild
-            : null;
-          const seccondElement = skillGroupEl.childNodes[1].childNodes;
-          if (!firstElement || !seccondElement) {
-            console.error("First or last child not found!");
-            continue; // Use 'continue' to process remaining elements instead of 'return'
-          }
-
-          // Obtain bounding boxes
-          const firstRect = firstElement.getBoundingClientRect();
-          seccondElement.forEach((el) => {
-            if (isElement(el)) {
-              const seccondRect = el.getBoundingClientRect();
-
-              const lineDiv = createLineByDOM(
-                firstRect.right,
-                (firstRect.top + firstRect.bottom) / 2,
-                seccondRect.left,
-                (seccondRect.top + seccondRect.bottom) / 2
-              );
-
-              skillGroupEl.append(lineDiv);
-            }
-          });
-        }
-      }
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
     }
   }, []); // Removed 'treeRef' from dependencies as refs do not trigger re-renders
 
   return (
-    <div ref={treeRef}>
+    <div ref={treeRef} className="skills" onScroll={handleResize}>
       <DisplayTree tree={props.tree} deeps={0} />
     </div>
   );

@@ -9,6 +9,7 @@ import DisplaySkills from "../../sections/DisplaySkills";
 
 function GamePage() {
   const gameRef = useRef<Game>();
+  const [isSkillDisplay, setIsSkillDisplay] = useState(false);
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
   const [code, setCode] = useState<string[]>([""]);
   const [fieldData, setFieldData] = useState<Array<EmptyCell | PlantedCell>[]>(
@@ -51,18 +52,26 @@ function GamePage() {
 
   return (
     <>
-      <div id="Game">
-        {fieldSection}
-        <CodePanel
-          code={code}
-          setCode={setCode}
-          isExecuting={isExecuting}
-          setIsExecuting={setIsExecuting}
-        />
-      </div>
-      {gameRef.current && (
+      {gameRef.current && !isSkillDisplay && (
+        <div id="Game" style={{ position: "absolute", top: 0, left: 0 }}>
+          {fieldSection}
+          <CodePanel
+            code={code}
+            setCode={setCode}
+            isExecuting={isExecuting}
+            setIsExecuting={setIsExecuting}
+          />
+        </div>
+      )}
+      {gameRef.current && isSkillDisplay && (
         <DisplaySkills tree={gameRef.current.unlocks.skillTree} />
       )}
+      <button
+        onClick={() => setIsSkillDisplay(!isSkillDisplay)}
+        style={{ position: "absolute", top: "10px", left: "10px" }}
+      >
+        Skills
+      </button>
     </>
   );
 }
