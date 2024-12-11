@@ -23,7 +23,7 @@ function DisplaySkills(props: Props) {
             deeps={props.deeps}
             xPosition={0}
           />
-          <div className="skill-group">
+          <div className="skill-next">
             {props.tree.nextSkills.map((el, index) => {
               if (isSkillTree(el)) {
                 return (
