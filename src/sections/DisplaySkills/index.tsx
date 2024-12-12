@@ -15,13 +15,22 @@ const isElement = (node: ChildNode | null): node is Element =>
 function DisplaySkills(props: Props) {
   const treeRef = useRef<HTMLDivElement>(null);
 
-  const handleResize = () => {
+  const drawLines = () => {
     const cleanUp = document.getElementsByClassName("line");
     while (cleanUp.length > 0) {
       cleanUp.item(0)?.remove();
     }
 
-    const elements = document.getElementsByClassName("skill-group");
+    if (!treeRef.current) {
+      throw new Error("Main tree block not found");
+    }
+
+    treeRef.current.scrollTop = 0;
+    treeRef.current.scrollLeft = 0;
+
+    const treeRefBoundings = treeRef.current.getBoundingClientRect();
+
+    const elements = treeRef.current.getElementsByClassName("skill-group");
     for (let i = 0; i < elements.length; i++) {
       console.log(elements.length);
 
@@ -31,7 +40,7 @@ function DisplaySkills(props: Props) {
           ? skillGroupEl.firstChild
           : null;
         const seccondElement = skillGroupEl.childNodes[1].childNodes;
-        if (!firstElement || !seccondElement) {
+        if (!firstElement || !seccondElement || !treeRefBoundings) {
           console.error("First or last child not found!");
           continue; // Use 'continue' to process remaining elements instead of 'return'
         }
@@ -43,10 +52,14 @@ function DisplaySkills(props: Props) {
             const seccondRect = el.getBoundingClientRect();
 
             const lineDiv = createLineByDOM(
-              firstRect.right + window.scrollX,
-              (firstRect.top + firstRect.bottom) / 2 + window.scrollY,
-              seccondRect.left + window.scrollX,
-              (seccondRect.top + seccondRect.bottom) / 2 + window.scrollY
+              firstRect.right + window.scrollX - treeRefBoundings.left,
+              (firstRect.top + firstRect.bottom) / 2 +
+                window.scrollY -
+                treeRefBoundings.top,
+              seccondRect.left + window.scrollX - treeRefBoundings.left,
+              (seccondRect.top + seccondRect.bottom) / 2 +
+                window.scrollY -
+                treeRefBoundings.top
             );
 
             skillGroupEl.append(lineDiv);
@@ -59,19 +72,25 @@ function DisplaySkills(props: Props) {
   useEffect(() => {
     if (treeRef.current) {
       setTimeout(() => {
-        handleResize();
+        drawLines();
       }, 10);
-      window.addEventListener("resize", handleResize);
+      // window.addEventListener("resize", handleResize);
 
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
+      // return () => {
+      //   window.removeEventListener("resize", handleResize);
+      // };
     }
   }, []); // Removed 'treeRef' from dependencies as refs do not trigger re-renders
 
   return (
-    <div ref={treeRef} className="skills" onScroll={handleResize}>
-      <DisplayTree tree={props.tree} deeps={0} />
+    <div className="skills-wrapper" ref={treeRef}>
+      <div
+        className="skills"
+        // onScroll={handleResize}
+        style={{ position: "relative" }}
+      >
+        <DisplayTree tree={props.tree} deeps={0} />
+      </div>
     </div>
   );
 }

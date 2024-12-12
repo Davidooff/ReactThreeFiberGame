@@ -68,7 +68,7 @@ function GamePage() {
       )}
       <button
         onClick={() => setIsSkillDisplay(!isSkillDisplay)}
-        style={{ position: "absolute", top: "10px", left: "10px" }}
+        style={{ position: "absolute", top: "10px", left: "10px", zIndex: 10 }}
       >
         Skills
       </button>

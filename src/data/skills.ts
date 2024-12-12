@@ -103,10 +103,40 @@ export const myTree: SkillTree<MySkillData> = {
       ],
     },
     {
-      name: "ChildSkill2",
-      isUnlocked: false,
-      img: wheat,
-      description: "Some text to make it look alive",
+      skill: {
+        name: "ChildSkill2",
+        isUnlocked: false,
+        img: wheat,
+        description: "Some text to make it look alive",
+      },
+      nextSkills: [
+        {
+          skill: {
+            name: "ChildSkill2",
+            isUnlocked: false,
+            img: wheat,
+            description: "Some text to make it look alive",
+          },
+          nextSkills: [
+            {
+              skill: {
+                name: "ChildSkill2",
+                isUnlocked: false,
+                img: wheat,
+                description: "Some text to make it look alive",
+              },
+              nextSkills: [
+                {
+                  name: "SuperGrandChildSkill1",
+                  isUnlocked: false,
+                  img: wheat,
+                  description: "Some text to make it look alive",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
 };
