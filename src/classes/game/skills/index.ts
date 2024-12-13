@@ -51,6 +51,25 @@ class Skills<T extends UnlockData> {
     }
   }
 
+  private _getUnlocked(skill: SkillTree<T> | T): Array<T | null> | null {
+    if (this.isSkillTree(skill)) {
+      return skill.skill.isUnlocked
+        ? [
+            skill.skill,
+            ...skill.nextSkills.flatMap((el) => this._getUnlocked(el)),
+          ]
+        : skill.nextSkills.flatMap((el) => this._getUnlocked(el));
+    } else {
+      return skill.isUnlocked ? [skill] : null;
+    }
+  }
+
+  public getUnlocked(): T[] | null {
+    return (
+      this._getUnlocked(this.skillTree)?.filter((el) => el !== null) || null
+    );
+  }
+
   private _getPossibleToUnlock(skillTree: SkillTree<T> | T): T[] | T | null {
     if (this.isSkillTree(skillTree)) {
       if (skillTree.skill.isUnlocked) {
@@ -70,8 +89,13 @@ class Skills<T extends UnlockData> {
     }
   }
 
-  public getPossibleToUnlock(): T[] | T | null {
-    return this._getPossibleToUnlock(this.skillTree);
+  public getPossibleToUnlock(): T[] {
+    const possibelToUnlock = this._getPossibleToUnlock(this.skillTree);
+    if (Array.isArray(possibelToUnlock)) {
+      return possibelToUnlock;
+    } else {
+      return possibelToUnlock ? [possibelToUnlock] : [];
+    }
   }
 
   private isSkillTree(node: SkillTree<T> | T): node is SkillTree<T> {

@@ -1,0 +1,41 @@
+"filename", "language", "JSON with Comments", "TypeScript", "JSON", "HTML", "JavaScript", "CSS", "Markdown", "TypeScript JSX", "comment", "blank", "total"
+"/home/david/Documents/projects/ReactThreeFiberGame/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 40, 0, 0, 11, 51
+"/home/david/Documents/projects/ReactThreeFiberGame/eslint.config.js", "JavaScript", 0, 0, 0, 0, 27, 0, 0, 0, 0, 2, 29
+"/home/david/Documents/projects/ReactThreeFiberGame/index.html", "HTML", 0, 0, 0, 13, 0, 0, 0, 0, 0, 1, 14
+"/home/david/Documents/projects/ReactThreeFiberGame/package-lock.json", "JSON", 0, 0, 3689, 0, 0, 0, 0, 0, 0, 1, 3690
+"/home/david/Documents/projects/ReactThreeFiberGame/package.json", "JSON", 0, 0, 36, 0, 0, 0, 0, 0, 0, 1, 37
+"/home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/field/EmptyCell.ts", "TypeScript", 0, 70, 0, 0, 0, 0, 0, 0, 4, 10, 84
+"/home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/field/PlantedCell.ts", "TypeScript", 0, 46, 0, 0, 0, 0, 0, 0, 5, 8, 59
+"/home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/field/index.ts", "TypeScript", 0, 176, 0, 0, 0, 0, 0, 0, 9, 25, 210
+"/home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/index.ts", "TypeScript", 0, 151, 0, 0, 0, 0, 0, 0, 25, 25, 201
+"/home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/skills/index.ts", "TypeScript", 0, 138, 0, 0, 0, 0, 0, 0, 10, 23, 171
+"/home/david/Documents/projects/ReactThreeFiberGame/src/data/plants.ts", "TypeScript", 0, 31, 0, 0, 0, 0, 0, 0, 1, 5, 37
+"/home/david/Documents/projects/ReactThreeFiberGame/src/data/skills.ts", "TypeScript", 0, 173, 0, 0, 0, 0, 0, 0, 0, 5, 178
+"/home/david/Documents/projects/ReactThreeFiberGame/src/main.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 16, 0, 2, 18
+"/home/david/Documents/projects/ReactThreeFiberGame/src/pages/game/game.css", "CSS", 0, 0, 0, 0, 0, 3, 0, 0, 4, 2, 9
+"/home/david/Documents/projects/ReactThreeFiberGame/src/pages/game/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 90, 4, 11, 105
+"/home/david/Documents/projects/ReactThreeFiberGame/src/pages/mainMenu/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/home/david/Documents/projects/ReactThreeFiberGame/src/reset.css", "CSS", 0, 0, 0, 0, 0, 42, 0, 0, 1, 0, 43
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/CameraSetUp.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 14, 4, 8, 26
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/CodePanel/codePanel.css", "CSS", 0, 0, 0, 0, 0, 14, 0, 0, 0, 3, 17
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/CodePanel/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 55, 0, 6, 61
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/DisplayCell.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 29, 0, 5, 34
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/DisplayPlayer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 13, 0, 4, 17
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/field.css", "CSS", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 33, 0, 5, 38
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/CreateSkillEl.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 21, 0, 4, 25
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/DisplayTree.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 40, 0, 4, 44
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/displaySkills.css", "CSS", 0, 0, 0, 0, 0, 81, 0, 0, 0, 13, 94
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 75, 7, 17, 99
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/Menu/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 47, 0, 5, 52
+"/home/david/Documents/projects/ReactThreeFiberGame/src/sections/Menu/menu.css", "CSS", 0, 0, 0, 0, 0, 50, 0, 0, 0, 7, 57
+"/home/david/Documents/projects/ReactThreeFiberGame/src/utils/convert2dPossition.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 8
+"/home/david/Documents/projects/ReactThreeFiberGame/src/utils/createLineByDOM.ts", "TypeScript", 0, 31, 0, 0, 0, 0, 0, 0, 0, 5, 36
+"/home/david/Documents/projects/ReactThreeFiberGame/src/utils/getRandomIntInRange.ts", "TypeScript", 0, 29, 0, 0, 0, 0, 0, 0, 3, 7, 39
+"/home/david/Documents/projects/ReactThreeFiberGame/src/utils/isSkillTree.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 2, 8
+"/home/david/Documents/projects/ReactThreeFiberGame/src/vite-env.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2
+"/home/david/Documents/projects/ReactThreeFiberGame/tsconfig.app.json", "JSON", 0, 0, 22, 0, 0, 0, 0, 0, 2, 3, 27
+"/home/david/Documents/projects/ReactThreeFiberGame/tsconfig.json", "JSON with Comments", 7, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8
+"/home/david/Documents/projects/ReactThreeFiberGame/tsconfig.node.json", "JSON", 0, 0, 20, 0, 0, 0, 0, 0, 2, 3, 25
+"/home/david/Documents/projects/ReactThreeFiberGame/vite.config.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 1, 2, 8
+"Total", "-", 7, 861, 3767, 13, 27, 194, 40, 433, 83, 242, 5667

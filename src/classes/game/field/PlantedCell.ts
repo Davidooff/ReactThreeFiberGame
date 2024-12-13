@@ -1,5 +1,15 @@
 import { Plant, PlantGrowthStage } from "../../../data/plants";
-import { EmptyCell, CellWetnesState } from "./EmptyCell"; // Adjust the import path as needed
+import { EmptyCell, EmptyCellProp } from "./EmptyCell"; // Adjust the import path as needed
+
+export interface PlantedCellProps extends EmptyCellProp {
+  plant: Plant;
+}
+
+export function isPlantedCell(
+  node: PlantedCellProps | EmptyCellProp
+): node is PlantedCellProps {
+  return (node as PlantedCell).plant !== undefined;
+}
 
 // PlantedCell extends EmptyCell to include planting functionality
 export class PlantedCell extends EmptyCell {
@@ -8,29 +18,20 @@ export class PlantedCell extends EmptyCell {
   ticksSincePlanted: number = 0; // Ticks since the plant was planted
   harvestReady: boolean = false; // Indicates if the plant is ready to harvest
   deletPlantFun: (cellPostion: [number, number]) => void;
+
   constructor(
-    rangeOfTiksBeforeGettingReadyToPlant: [number, number],
-    rangeOfTiksBeforeGettingDry: [number, number],
-    cellPostion: [number, number],
-    fieldWetnesState: CellWetnesState,
-    // Extenshion
-    plant: Plant,
+    props: PlantedCellProps,
     deletPlantCallBack: (cellPostion: [number, number]) => void
   ) {
-    super(
-      rangeOfTiksBeforeGettingReadyToPlant,
-      rangeOfTiksBeforeGettingDry,
-      cellPostion,
-      fieldWetnesState
-    );
-    this.plant = plant;
+    super(props);
+    this.plant = props.plant;
     this.deletPlantFun = deletPlantCallBack;
   }
 
   /**
    * Overrides the processFieldStateTik method to include plant growth logic.
    */
-  processFieldStateTik(): void {
+  public processFieldStateTik(): void {
     super.processFieldStateTik();
     if (!this.harvestReady) {
       if (this.fieldWetnesState === this.plant.needWetStateToGrow) {

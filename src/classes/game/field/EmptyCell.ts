@@ -6,24 +6,28 @@ export enum CellWetnesState {
   ReadyToPlant,
 }
 
+export interface EmptyCellProp {
+  fieldWetnesState: CellWetnesState; // Current state of the field
+  tiksUntilChangingWetnesState: number | null; // If null => Field is dry => (fieldWetnesState will not change)
+  rangeOfTiksBeforeGettingReadyToPlant: [number, number]; // Possible range for becoming ready to plant
+  rangeOfTiksBeforeGettingDry: [number, number]; // Range of tiks for drying;
+  cellPostion: [number, number];
+}
+
 export class EmptyCell {
   fieldWetnesState: CellWetnesState; // Current state of the field
-  tiksUntilChangingWetnesState: number | null = null; // If null => Field is dry => (fieldWetnesState will not change)
+  tiksUntilChangingWetnesState: number | null; // If null => Field is dry => (fieldWetnesState will not change)
   rangeOfTiksBeforeGettingReadyToPlant: [number, number]; // Possible range for becoming ready to plant
   rangeOfTiksBeforeGettingDry: [number, number]; // Range of tiks for drying;
   cellPostion: [number, number];
 
-  constructor(
-    rangeOfTiksBeforeGettingReadyToPlant: [number, number],
-    rangeOfTiksBeforeGettingDry: [number, number],
-    cellPostion: [number, number],
-    fieldWetnesState: CellWetnesState = CellWetnesState.Dry
-  ) {
+  constructor(props: EmptyCellProp) {
     this.rangeOfTiksBeforeGettingReadyToPlant =
-      rangeOfTiksBeforeGettingReadyToPlant;
-    this.rangeOfTiksBeforeGettingDry = rangeOfTiksBeforeGettingDry;
-    this.fieldWetnesState = fieldWetnesState;
-    this.cellPostion = cellPostion;
+      props.rangeOfTiksBeforeGettingReadyToPlant;
+    this.rangeOfTiksBeforeGettingDry = props.rangeOfTiksBeforeGettingDry;
+    this.fieldWetnesState = props.fieldWetnesState;
+    this.cellPostion = props.cellPostion;
+    this.tiksUntilChangingWetnesState = props.tiksUntilChangingWetnesState; // If null => Field is dry => (fieldWetnesState will not change)
   }
 
   processFieldStateTik(): void {

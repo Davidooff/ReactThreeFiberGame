@@ -1,6 +1,6 @@
 import { Plant } from "../../../data/plants";
 import { CellWetnesState, EmptyCell } from "./EmptyCell";
-import { PlantedCell } from "./PlantedCell";
+import { isPlantedCell, PlantedCell } from "./PlantedCell";
 
 export enum Dir {
   Up,
@@ -9,10 +9,13 @@ export enum Dir {
   Left,
 }
 
-const FieldRuels: {
-  rangeOfTiksBeforeGettingReadyToPlant: [number, number];
-  rangeOfTiksBeforeGettingDry: [number, number];
+const EmptyCellRuels: {
+  // fieldWetnesState: CellWetnesState; // Current state of the field
+  tiksUntilChangingWetnesState: number | null; // If null => Field is dry => (fieldWetnesState will not change)
+  rangeOfTiksBeforeGettingReadyToPlant: [number, number]; // Possible range for becoming ready to plant
+  rangeOfTiksBeforeGettingDry: [number, number]; // Range of tiks for drying;
 } = {
+  tiksUntilChangingWetnesState: null,
   rangeOfTiksBeforeGettingReadyToPlant: [5, 10],
   rangeOfTiksBeforeGettingDry: [5, 10],
 };
@@ -22,12 +25,11 @@ function createEmptyCell(
   position: [number, number],
   wet: CellWetnesState
 ): EmptyCell {
-  return new EmptyCell(
-    FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
-    FieldRuels.rangeOfTiksBeforeGettingDry,
-    [position[0], position[1]],
-    wet
-  );
+  return new EmptyCell({
+    ...EmptyCellRuels,
+    cellPostion: position,
+    fieldWetnesState: wet,
+  });
 }
 /** Applying position and chacking is x/y !< 0 */
 function applyDirToPosition(
@@ -68,20 +70,23 @@ export class Field {
   /** Creates a new Field instance (U can send just one of params), other one will be calculated. */
   constructor(
     size?: [number, number],
-    field?: Array<EmptyCell | PlantedCell>[]
+    field?: Array<EmptyCell | PlantedCell>[],
+    playerPosition: [number, number] = [0, 0]
   ) {
     if (field) {
-      this.field = field;
+      this.field = field.map((row) =>
+        row.map((el) => {
+          if (isPlantedCell(el)) {
+            return new PlantedCell(el, this.deletPlant);
+          } else {
+            return new EmptyCell(el);
+          }
+        })
+      );
     } else if (size) {
       this.field = Array.from({ length: size[0] }, (_, i0) =>
-        Array.from(
-          { length: size[1] },
-          (_, i1) =>
-            new EmptyCell(
-              FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
-              FieldRuels.rangeOfTiksBeforeGettingDry,
-              [i0, i1]
-            )
+        Array.from({ length: size[1] }, (_, i1) =>
+          createEmptyCell([i0, i1], CellWetnesState.Dry)
         )
       );
       console.log(this.field);
@@ -90,6 +95,7 @@ export class Field {
         "U need to give size or field (Array<EmptyCell | PlantedCell>[])"
       );
     this.fieldSize = [this.field.length, this.field[0].length];
+    this.playerPosition = playerPosition;
   }
 
   /** changing cell to new EmptyCell */
@@ -105,7 +111,11 @@ export class Field {
     console.log(this.field);
 
     this.field.forEach((fieldRow) =>
-      fieldRow.forEach((fieldRowEl) => fieldRowEl.processFieldStateTik())
+      fieldRow.forEach((fieldRowEl) => {
+        console.log(fieldRowEl);
+
+        fieldRowEl.processFieldStateTik();
+      })
     );
   }
 
@@ -165,12 +175,15 @@ export class Field {
 
   deletPlant(position: [number, number] = this.playerPosition) {
     const [x, y] = position;
-    this.field[x][y] = new EmptyCell(
-      FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
-      FieldRuels.rangeOfTiksBeforeGettingDry,
-      [x, y],
-      this.field[x][y].fieldWetnesState
-    );
+    const fieldEl = this.field[x][y];
+    this.field[x][y] = new EmptyCell({
+      fieldWetnesState: fieldEl.fieldWetnesState,
+      tiksUntilChangingWetnesState: fieldEl.tiksUntilChangingWetnesState,
+      rangeOfTiksBeforeGettingReadyToPlant:
+        EmptyCellRuels.rangeOfTiksBeforeGettingReadyToPlant,
+      rangeOfTiksBeforeGettingDry: EmptyCellRuels.rangeOfTiksBeforeGettingDry,
+      cellPostion: position,
+    });
   }
 
   plant(plant: Plant) {
@@ -180,14 +193,17 @@ export class Field {
     }
 
     this.field[x][y] = new PlantedCell(
-      FieldRuels.rangeOfTiksBeforeGettingReadyToPlant,
-      FieldRuels.rangeOfTiksBeforeGettingDry,
-      [x, y],
-      this.field[x][y].fieldWetnesState,
-      plant,
-      () => {
-        this.deletPlant([x, y]);
-      }
+      {
+        rangeOfTiksBeforeGettingReadyToPlant:
+          EmptyCellRuels.rangeOfTiksBeforeGettingReadyToPlant,
+        rangeOfTiksBeforeGettingDry: EmptyCellRuels.rangeOfTiksBeforeGettingDry,
+        cellPostion: [x, y],
+        fieldWetnesState: this.field[x][y].fieldWetnesState,
+        plant,
+        tiksUntilChangingWetnesState:
+          this.field[x][y].tiksUntilChangingWetnesState,
+      },
+      this.deletPlant
     );
   }
 }

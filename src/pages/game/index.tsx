@@ -6,8 +6,10 @@ import DisplayField from "../../sections/DisplayField";
 import CodePanel from "../../sections/DisplayField/CodePanel";
 import "./game.css";
 import DisplaySkills from "../../sections/DisplaySkills";
+import { useParams } from "react-router";
 
 function GamePage() {
+  const { isNewGame } = useParams();
   const gameRef = useRef<Game>();
   const [isSkillDisplay, setIsSkillDisplay] = useState(false);
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
@@ -18,8 +20,32 @@ function GamePage() {
 
   /** Once setting up game */
   useEffect(() => {
-    gameRef.current = new Game();
+    const save = localStorage.getItem("save");
+    console.log(isNewGame);
+
+    if (save && isNewGame !== "new") {
+      try {
+        gameRef.current = new Game(JSON.parse(save));
+      } catch {
+        gameRef.current = new Game();
+      }
+    } else {
+      gameRef.current = new Game();
+    }
+
     setFieldData(gameRef.current.field.field);
+
+    const handleBeforeUnload = () => {
+      // Serialize and save data
+      localStorage.setItem("save", JSON.stringify(gameRef.current?.getSave()));
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
 
   /** Setting interval while isExecuting === true */

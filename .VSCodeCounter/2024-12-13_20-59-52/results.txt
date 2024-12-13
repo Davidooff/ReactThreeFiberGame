@@ -1,0 +1,89 @@
+Date : 2024-12-13 20:59:52
+Directory : /home/david/Documents/projects/ReactThreeFiberGame
+Total : 39 files,  5342 codes, 83 comments, 242 blanks, all 5667 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          4 |      3,767 |          4 |          8 |      3,779 |
+| TypeScript         |         13 |        861 |         59 |        121 |      1,041 |
+| TypeScript JSX     |         12 |        433 |         15 |         72 |        520 |
+| CSS                |          6 |        194 |          5 |         26 |        225 |
+| Markdown           |          1 |         40 |          0 |         11 |         51 |
+| JavaScript         |          1 |         27 |          0 |          2 |         29 |
+| HTML               |          1 |         13 |          0 |          1 |         14 |
+| JSON with Comments |          1 |          7 |          0 |          1 |          8 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                    |         39 |      5,342 |         83 |        242 |      5,667 |
+| . (Files)                                                                                            |          9 |      3,859 |          5 |         25 |      3,889 |
+| src                                                                                                  |         30 |      1,483 |         78 |        217 |      1,778 |
+| src (Files)                                                                                          |          3 |         58 |          2 |          3 |         63 |
+| src/classes                                                                                          |          5 |        581 |         53 |         91 |        725 |
+| src/classes/game                                                                                     |          5 |        581 |         53 |         91 |        725 |
+| src/classes/game (Files)                                                                             |          1 |        151 |         25 |         25 |        201 |
+| src/classes/game/field                                                                               |          3 |        292 |         18 |         43 |        353 |
+| src/classes/game/skills                                                                              |          1 |        138 |         10 |         23 |        171 |
+| src/data                                                                                             |          2 |        204 |          1 |         10 |        215 |
+| src/pages                                                                                            |          3 |         93 |          8 |         14 |        115 |
+| src/pages/game                                                                                       |          2 |         93 |          8 |         13 |        114 |
+| src/pages/mainMenu                                                                                   |          1 |          0 |          0 |          1 |          1 |
+| src/sections                                                                                         |         13 |        476 |         11 |         82 |        569 |
+| src/sections/DisplayField                                                                            |          7 |        162 |          4 |         32 |        198 |
+| src/sections/DisplayField (Files)                                                                    |          5 |         93 |          4 |         23 |        120 |
+| src/sections/DisplayField/CodePanel                                                                  |          2 |         69 |          0 |          9 |         78 |
+| src/sections/DisplaySkills                                                                           |          4 |        217 |          7 |         38 |        262 |
+| src/sections/Menu                                                                                    |          2 |         97 |          0 |         12 |        109 |
+| src/utils                                                                                            |          4 |         71 |          3 |         17 |         91 |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                             | language           | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /home/david/Documents/projects/ReactThreeFiberGame/README.md                                         | Markdown           |         40 |          0 |         11 |         51 |
+| /home/david/Documents/projects/ReactThreeFiberGame/eslint.config.js                                  | JavaScript         |         27 |          0 |          2 |         29 |
+| /home/david/Documents/projects/ReactThreeFiberGame/index.html                                        | HTML               |         13 |          0 |          1 |         14 |
+| /home/david/Documents/projects/ReactThreeFiberGame/package-lock.json                                 | JSON               |      3,689 |          0 |          1 |      3,690 |
+| /home/david/Documents/projects/ReactThreeFiberGame/package.json                                      | JSON               |         36 |          0 |          1 |         37 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/field/EmptyCell.ts               | TypeScript         |         70 |          4 |         10 |         84 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/field/PlantedCell.ts             | TypeScript         |         46 |          5 |          8 |         59 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/field/index.ts                   | TypeScript         |        176 |          9 |         25 |        210 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/index.ts                         | TypeScript         |        151 |         25 |         25 |        201 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/classes/game/skills/index.ts                  | TypeScript         |        138 |         10 |         23 |        171 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/data/plants.ts                                | TypeScript         |         31 |          1 |          5 |         37 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/data/skills.ts                                | TypeScript         |        173 |          0 |          5 |        178 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/main.tsx                                      | TypeScript JSX     |         16 |          0 |          2 |         18 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/pages/game/game.css                           | CSS                |          3 |          4 |          2 |          9 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/pages/game/index.tsx                          | TypeScript JSX     |         90 |          4 |         11 |        105 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/pages/mainMenu/index.tsx                      | TypeScript JSX     |          0 |          0 |          1 |          1 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/reset.css                                     | CSS                |         42 |          1 |          0 |         43 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/CameraSetUp.tsx         | TypeScript JSX     |         14 |          4 |          8 |         26 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/CodePanel/codePanel.css | CSS                |         14 |          0 |          3 |         17 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/CodePanel/index.tsx     | TypeScript JSX     |         55 |          0 |          6 |         61 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/DisplayCell.tsx         | TypeScript JSX     |         29 |          0 |          5 |         34 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/DisplayPlayer.tsx       | TypeScript JSX     |         13 |          0 |          4 |         17 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/field.css               | CSS                |          4 |          0 |          1 |          5 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplayField/index.tsx               | TypeScript JSX     |         33 |          0 |          5 |         38 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/CreateSkillEl.tsx      | TypeScript JSX     |         21 |          0 |          4 |         25 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/DisplayTree.tsx        | TypeScript JSX     |         40 |          0 |          4 |         44 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/displaySkills.css      | CSS                |         81 |          0 |         13 |         94 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/DisplaySkills/index.tsx              | TypeScript JSX     |         75 |          7 |         17 |         99 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/Menu/index.tsx                       | TypeScript JSX     |         47 |          0 |          5 |         52 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/sections/Menu/menu.css                        | CSS                |         50 |          0 |          7 |         57 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/utils/convert2dPossition.ts                   | TypeScript         |          5 |          0 |          3 |          8 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/utils/createLineByDOM.ts                      | TypeScript         |         31 |          0 |          5 |         36 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/utils/getRandomIntInRange.ts                  | TypeScript         |         29 |          3 |          7 |         39 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/utils/isSkillTree.ts                          | TypeScript         |          6 |          0 |          2 |          8 |
+| /home/david/Documents/projects/ReactThreeFiberGame/src/vite-env.d.ts                                 | TypeScript         |          0 |          1 |          1 |          2 |
+| /home/david/Documents/projects/ReactThreeFiberGame/tsconfig.app.json                                 | JSON               |         22 |          2 |          3 |         27 |
+| /home/david/Documents/projects/ReactThreeFiberGame/tsconfig.json                                     | JSON with Comments |          7 |          0 |          1 |          8 |
+| /home/david/Documents/projects/ReactThreeFiberGame/tsconfig.node.json                                | JSON               |         20 |          2 |          3 |         25 |
+| /home/david/Documents/projects/ReactThreeFiberGame/vite.config.ts                                    | TypeScript         |          5 |          1 |          2 |          8 |
+| Total                                                                                                |                    |      5,342 |         83 |        242 |      5,667 |
++------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

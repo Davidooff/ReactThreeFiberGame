@@ -2,7 +2,8 @@ import wheat from "../assets/skills/wheat.png";
 
 export const myTree: SkillTree<MySkillData> = {
   skill: {
-    name: "RootSkill",
+    cost: 100,
+    title: "RootSkill",
     isUnlocked: false,
     img: wheat,
     description: "Some text to make it look alive",
@@ -10,7 +11,8 @@ export const myTree: SkillTree<MySkillData> = {
   nextSkills: [
     {
       skill: {
-        name: "ChildSkill1",
+        cost: 100,
+        title: "ChildSkill1",
         isUnlocked: false,
         img: wheat,
         description: "Some text to make it look alive",
@@ -18,7 +20,8 @@ export const myTree: SkillTree<MySkillData> = {
       nextSkills: [
         {
           skill: {
-            name: "GrandChildSkill2",
+            cost: 100,
+            title: "GrandChildSkill2",
             isUnlocked: false,
             img: wheat,
             description: "Some text to make it look alive",
@@ -26,32 +29,37 @@ export const myTree: SkillTree<MySkillData> = {
           nextSkills: [
             {
               skill: {
-                name: "SuperGrandChildSkill1",
+                cost: 100,
+                title: "SuperGrandChildSkill1",
                 isUnlocked: false,
                 img: wheat,
                 description: "Some text to make it look alive",
               },
               nextSkills: [
                 {
-                  name: "SuperPuperChildSkill1",
+                  cost: 100,
+                  title: "SuperPuperChildSkill1",
                   isUnlocked: false,
                   img: wheat,
                   description: "Some text to make it look alive",
                 },
                 {
-                  name: "SuperPuperChildSkill2",
+                  cost: 100,
+                  title: "SuperPuperChildSkill2",
                   isUnlocked: false,
                   img: wheat,
                   description: "Some text to make it look alive",
                 },
                 {
-                  name: "SuperPuperChildSkill3",
+                  cost: 100,
+                  title: "SuperPuperChildSkill3",
                   isUnlocked: false,
                   img: wheat,
                   description: "Some text to make it look alive",
                 },
                 {
-                  name: "SuperPuperChildSkill4",
+                  cost: 100,
+                  title: "SuperPuperChildSkill4",
                   isUnlocked: false,
                   img: wheat,
                   description: "Some text to make it look alive",
@@ -59,19 +67,22 @@ export const myTree: SkillTree<MySkillData> = {
               ],
             },
             {
-              name: "SuperGrandChildSkill2",
+              cost: 100,
+              title: "SuperGrandChildSkill2",
               isUnlocked: false,
               img: wheat,
               description: "Some text to make it look alive",
             },
             {
-              name: "SuperGrandChildSkill3",
+              cost: 100,
+              title: "SuperGrandChildSkill3",
               isUnlocked: false,
               img: wheat,
               description: "Some text to make it look alive",
             },
             {
-              name: "SuperGrandChildSkill4",
+              cost: 100,
+              title: "SuperGrandChildSkill4",
               isUnlocked: false,
               img: wheat,
               description: "Some text to make it look alive",
@@ -80,20 +91,23 @@ export const myTree: SkillTree<MySkillData> = {
         },
         {
           skill: {
-            name: "GrandChildSkill2",
+            cost: 100,
+            title: "GrandChildSkill2",
             isUnlocked: false,
             img: wheat,
             description: "Some text to make it look alive",
           },
           nextSkills: [
             {
-              name: "SuperGrandChildSkill1",
+              cost: 100,
+              title: "SuperGrandChildSkill1",
               isUnlocked: false,
               img: wheat,
               description: "Some text to make it look alive",
             },
             {
-              name: "SuperGrandChildSkill2",
+              cost: 100,
+              title: "SuperGrandChildSkill2",
               isUnlocked: false,
               img: wheat,
               description: "Some text to make it look alive",
@@ -104,7 +118,8 @@ export const myTree: SkillTree<MySkillData> = {
     },
     {
       skill: {
-        name: "ChildSkill2",
+        cost: 100,
+        title: "ChildSkill2",
         isUnlocked: false,
         img: wheat,
         description: "Some text to make it look alive",
@@ -112,7 +127,8 @@ export const myTree: SkillTree<MySkillData> = {
       nextSkills: [
         {
           skill: {
-            name: "ChildSkill2",
+            cost: 100,
+            title: "ChildSkill2",
             isUnlocked: false,
             img: wheat,
             description: "Some text to make it look alive",
@@ -120,14 +136,16 @@ export const myTree: SkillTree<MySkillData> = {
           nextSkills: [
             {
               skill: {
-                name: "ChildSkill2",
+                cost: 100,
+                title: "ChildSkill2",
                 isUnlocked: false,
                 img: wheat,
                 description: "Some text to make it look alive",
               },
               nextSkills: [
                 {
-                  name: "SuperGrandChildSkill1",
+                  cost: 100,
+                  title: "SuperGrandChildSkill1",
                   isUnlocked: false,
                   img: wheat,
                   description: "Some text to make it look alive",
@@ -142,7 +160,8 @@ export const myTree: SkillTree<MySkillData> = {
 };
 
 export interface MySkillData extends UnlockData {
-  name: string;
+  cost: number;
+  title: string;
   img: string;
   description: string;
 }
