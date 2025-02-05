@@ -4,6 +4,7 @@ import {
   PlantedCell,
 } from "../../classes/game/field/PlantedCell";
 import convert2dPossition from "../../utils/convert2dPossition";
+import Model from "../DisplayGLTF";
 
 interface Props {
   fieldCell: EmptyCell | PlantedCell;
@@ -21,10 +22,7 @@ function DisplayCell(props: Props) {
         />
       </mesh>
       {isPlantedCell(props.fieldCell) && (
-        <mesh position={convert2dPossition(props.fieldCell.cellPostion, 0.6)}>
-          <boxGeometry args={[0.1, 0.4, 0, 1]} />
-          <meshStandardMaterial color={"purple"} />
-        </mesh>
+        <Model plantName={props.fieldCell.plant.title} plantStage={props.fieldCell.currentGrowthStage} />
       )}
     </>
   );

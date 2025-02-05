@@ -68,19 +68,19 @@ export const plantsModels: PlantModels = {
   "Wheat": {
     [PlantGrowthStage.Seed]: {
       model_path: "/wheat/scene.gltf",
-      scale: 10
+      scale: 4
     },
     [PlantGrowthStage.Sprout]: {
       model_path: "/wheat/scene.gltf",
-      scale: 0.3
+      scale: 6
     },
     [PlantGrowthStage.Mature]: {
       model_path: "/wheat/scene.gltf",
-      scale: 0.6
+      scale: 8
     },
     [PlantGrowthStage.Harvestable]: {
       model_path: " /wheat/scene.gltf",
-      scale: 1
+      scale: 10
     }
   }
 }

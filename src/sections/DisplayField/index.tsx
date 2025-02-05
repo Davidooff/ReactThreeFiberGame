@@ -14,8 +14,6 @@ interface Props {
 }
 
 function DisplayField(props: Props) {
-  console.log("Field Data: ", props.fieldData);
-  console.log("Possition: ", props.playerPosition);
 
   return (
     <div id="CanvasDiv">

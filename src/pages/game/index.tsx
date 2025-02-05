@@ -90,7 +90,7 @@ function GamePage() {
         </div>
       )}
       {gameRef.current && isSkillDisplay && (
-        <DisplaySkills tree={gameRef.current.unlocks.skillTree} />
+        <DisplaySkills tree={gameRef.current.skills.skillTree} />
       )}
       <button
         onClick={() => setIsSkillDisplay(!isSkillDisplay)}

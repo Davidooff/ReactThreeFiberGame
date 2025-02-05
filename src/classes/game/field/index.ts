@@ -108,12 +108,10 @@ export class Field {
 
   /** calling processFieldStateTik in each this.field element */
   processTik() {
-    console.log(this.field);
+    console.log(this.field[0][0]);
 
     this.field.forEach((fieldRow) =>
       fieldRow.forEach((fieldRowEl) => {
-        console.log(fieldRowEl);
-
         fieldRowEl.processFieldStateTik();
       })
     );
