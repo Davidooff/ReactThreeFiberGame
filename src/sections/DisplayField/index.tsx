@@ -1,6 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Field } from "../../classes/game/field";
 import { EmptyCell } from "../../classes/game/field/EmptyCell";
 import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import DisplayCell from "./DisplayCell";

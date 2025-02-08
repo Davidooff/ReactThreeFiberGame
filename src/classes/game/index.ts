@@ -1,5 +1,5 @@
 import { Plant } from "../../data/plants";
-import { MySkillData, myTree, SkillTree } from "../../data/skills";
+import { MySkillData, myTree, SkillTree, UnlockData } from "../../data/skills";
 import { Dir, Field } from "./field";
 import { CellWetnesState, EmptyCell } from "./field/EmptyCell";
 import { isPlantedCell, PlantedCell } from "./field/PlantedCell";
@@ -30,7 +30,7 @@ export interface SaveData {
 class Game {
   money: number = 100;
   field = new Field([10, 10]);
-  unlocks = new Skills(myTree);
+  unlocks = new Skills<MySkillData>(myTree);
   unlockedPlants: Plant[] = defaultStartPlants;
   playerCode: string = "";
   /** Function(
