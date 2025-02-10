@@ -1,0 +1,16 @@
+.pop-up-wrapper{
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 1000;
+  width: 600px;
+}
+
+.pop-up{
+  background-color: #242424;
+  color: white;
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  height: 150px;
+}

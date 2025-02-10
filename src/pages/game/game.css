@@ -1,8 +1,9 @@
 #Game {
   display: flex;
+  width: 100vw;
+  height: 100vh;
 }
 
-/* #CanvasDiv { in field.css
-  width: 70vw;
-  height: 100vh;
-} */
+#CanvasDiv {
+  width: 50%;
+}

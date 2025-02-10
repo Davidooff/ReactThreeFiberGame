@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import { EmptyCell } from "../../classes/game/field/EmptyCell";
 import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import DisplayCell from "./DisplayCell";
-import "./field.css";
 import CameraSetup from "./CameraSetUp";
 import DisplayPlayer from "./DisplayPlayer";
 

@@ -6,7 +6,12 @@
 }
 
 .code-el-wrapper {
+  margin-top: 20px;
   position: relative;
+}
+
+.code-panel_control{
+  float: right;
 }
 
 .code-el-wrapper .close-el {

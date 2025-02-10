@@ -1,5 +1,5 @@
 import Game from "../../classes/game";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import { EmptyCell } from "../../classes/game/field/EmptyCell";
 import DisplayField from "../../sections/DisplayField";
@@ -7,6 +7,9 @@ import CodePanel from "../../sections/DisplayField/CodePanel";
 import "./game.css";
 import DisplaySkills from "../../sections/DisplaySkills";
 import { useParams } from "react-router";
+import { ExpStateUpdate } from "../../classes/game/exp";
+import ExpLvl from "./ExpLvl";
+import PopUp, { PopUpData } from "../../sections/PopUp";
 
 function GamePage() {
   const { isNewGame } = useParams();
@@ -17,6 +20,8 @@ function GamePage() {
   const [fieldData, setFieldData] = useState<Array<EmptyCell | PlantedCell>[]>(
     []
   );
+  const [expState, setExpState] = useState<ExpStateUpdate>({exp: 0, lvl: 0, exp_this_lvl: 0});
+  const [newPopUp, setNewPopUp] = useState<PopUpData| null>(null);
 
   /** Once setting up game */
   useEffect(() => {
@@ -25,12 +30,12 @@ function GamePage() {
 
     if (save && isNewGame !== "new") {
       try {
-        gameRef.current = new Game(JSON.parse(save));
+        gameRef.current = new Game(setNewPopUp, setExpState, JSON.parse(save));
       } catch {
-        gameRef.current = new Game();
+        gameRef.current = new Game(setNewPopUp, setExpState);
       }
     } else {
-      gameRef.current = new Game();
+      gameRef.current = new Game(setNewPopUp, setExpState);
     }
 
     setFieldData(gameRef.current.field.field);
@@ -76,6 +81,10 @@ function GamePage() {
     [fieldData]
   );
 
+  const ExpLvlSection = useMemo(() => <ExpLvl expState={expState} updateExpState={setExpState} />, [expState]);
+  const PopUpMemo = useMemo(() => <PopUp newPopUpData={newPopUp} setNewPopUp={setNewPopUp} timeToWait={5000}/>, [newPopUp]);
+
+
   return (
     <>
       {gameRef.current && !isSkillDisplay && (
@@ -85,7 +94,7 @@ function GamePage() {
             code={code}
             setCode={setCode}
             isExecuting={isExecuting}
-            setIsExecuting={setIsExecuting}
+            setIsExecuting={setIsExecuting} 
           />
         </div>
       )}
@@ -98,6 +107,8 @@ function GamePage() {
       >
         Skills
       </button>
+      {ExpLvlSection}
+      {PopUpMemo}
     </>
   );
 }

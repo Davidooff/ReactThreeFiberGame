@@ -1,9 +1,12 @@
+import { Dispatch, SetStateAction } from "react";
 import { Plant } from "../../data/plants";
-import { MySkillData, myTree, SkillTree, UnlockData } from "../../data/skills";
+import { MySkillData, myTree, SkillTree } from "../../data/skills";
+import Exp, { ExpStateUpdate } from "./exp";
 import { Dir, Field } from "./field";
 import { CellWetnesState, EmptyCell } from "./field/EmptyCell";
 import { isPlantedCell, PlantedCell } from "./field/PlantedCell";
 import Skills from "./skills";
+import { PopUpData } from "../../sections/PopUp";
 
 const gameRuels = {
   waterCost: 1,
@@ -25,6 +28,7 @@ export interface SaveData {
   fieldData: Array<EmptyCell | PlantedCell>[];
   playerPosition: [number, number];
   skillTree: SkillTree<MySkillData>;
+  exp: number
 }
 
 class Game {
@@ -32,6 +36,7 @@ class Game {
   field = new Field([10, 10]);
   unlocks = new Skills<MySkillData>(myTree);
   unlockedPlants: Plant[] = defaultStartPlants;
+  expUnlocks: Exp;
   playerCode: string = "";
   /** Function(
       move,
@@ -45,7 +50,7 @@ class Game {
       this.playerCode
     ); */
   playerFunction: Function | null = null;
-  constructor(save?: SaveData) {
+  constructor(addPopUp: Dispatch<SetStateAction<PopUpData | null>>, expUnlockState: Dispatch<SetStateAction<ExpStateUpdate>>, save?: SaveData) {
     if (save) {
       this.money = save.money;
       this.field = new Field([0, 0], save.fieldData);
@@ -53,6 +58,7 @@ class Game {
       this.field.playerPosition = save.playerPosition;
       this.unlockedPlants = save.unlockedPlants;
     }
+    this.expUnlocks = new Exp(save?.exp || 0, addPopUp, expUnlockState);
   }
 
   createUserFunction(): Function {
@@ -97,6 +103,7 @@ class Game {
     if (this.money >= gameRuels.waterCost) {
       this.money -= gameRuels.waterCost;
       this.field.water();
+      this.expUnlocks.addExp(20);
     } else {
       throw new Error("Not enough money");
     }
@@ -193,6 +200,7 @@ class Game {
       fieldData: this.field.field,
       playerPosition: this.field.playerPosition,
       skillTree: this.unlocks.skillTree,
+      exp: this.expUnlocks.exp,
     };
   }
 }

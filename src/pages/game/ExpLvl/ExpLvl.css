@@ -1,0 +1,32 @@
+.exp-wrapper{
+  top: 50px;
+  left: 50%;
+  width: 100vw;
+}
+
+.exp{
+  margin-inline: auto;
+  display: flex;
+  width: 65%;
+}
+
+.exp h2 {
+  margin-inline: 10px;
+}
+
+.exp-line{
+  border-radius: 15px;
+  background: greenyellow;
+  width: 100%
+}
+
+.exp-inner-line{
+  background: blue;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.curent-exp{
+  translate: -50% 0;
+  bottom: -20px;
+}
