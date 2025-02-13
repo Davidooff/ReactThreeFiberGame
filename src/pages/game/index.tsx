@@ -18,11 +18,9 @@ function GamePage() {
   const [isSkillDisplay, setIsSkillDisplay] = useState(false);
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
   const [code, setCode] = useState<string[]>([""]);
-  const [fieldData, setFieldData] = useState<Array<EmptyCell | PlantedCell>[]>(
-    []
-  );
-  const [expState, setExpState] = useState<ExpStateUpdate>({exp: 0, lvl: 0, exp_this_lvl: 0});
-  const {newPopUp, setNewPopUp} = usePopUpContext();
+  const [fieldReRender, setFieldReRender] = useState<{}>({});
+  const [expState, setExpState] = useState<ExpStateUpdate>({ exp: 0, lvl: 0, exp_this_lvl: 0 });
+  const { setNewPopUp } = usePopUpContext();
 
   /** Once setting up game */
   useEffect(() => {
@@ -39,15 +37,13 @@ function GamePage() {
       gameRef.current = new Game(setNewPopUp, setExpState);
     }
 
-    setFieldData(gameRef.current.field.field);
-
     const handleBeforeUnload = () => {
       // Serialize and save data
       localStorage.setItem("save", JSON.stringify(gameRef.current?.getSave()));
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
-
+    setFieldReRender({});
     // Cleanup
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
@@ -62,7 +58,9 @@ function GamePage() {
         if (gameRef.current) {
           gameRef.current.execute(code.join("\n"));
           gameRef.current.field.processTik();
-          setFieldData([...gameRef.current.field.field]);
+          // Trigger a re-render by updating fieldReRender
+          console.log("re-render", gameRef.current.field.field);
+          setFieldReRender({});
         }
       }, 1000);
     } else {
@@ -77,10 +75,10 @@ function GamePage() {
     () =>
       gameRef.current &&
       DisplayField({
-        fieldData,
+        fieldData: gameRef.current.field.field,
         playerPosition: gameRef.current.field.playerPosition,
       }),
-    [fieldData]
+    [fieldReRender]
   );
 
   const ExpLvlSection = useMemo(() => <ExpLvl expState={expState} updateExpState={setExpState} />, [expState]);
@@ -109,4 +107,5 @@ function GamePage() {
     </>
   );
 }
+
 export default GamePage;

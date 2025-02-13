@@ -13,6 +13,7 @@ interface Props {
 const stateColors = ["brown", "blue", "green"];
 
 function DisplayCell(props: Props) {
+  console.log(isPlantedCell(props.fieldCell));
   return (
     <>
       <mesh position={convert2dPossition(props.fieldCell.cellPostion)}>
@@ -22,7 +23,7 @@ function DisplayCell(props: Props) {
         />
       </mesh>
       {isPlantedCell(props.fieldCell) && (
-        <Model plantName={props.fieldCell.plant.title} plantStage={props.fieldCell.currentGrowthStage} />
+        <Model plantName={props.fieldCell.plant.title} plantStage={props.fieldCell.currentGrowthStage} position={props.fieldCell.cellPostion} />
       )}
     </>
   );

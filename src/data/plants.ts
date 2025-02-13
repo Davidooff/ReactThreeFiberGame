@@ -48,6 +48,7 @@ const plantsData: Plant[] = [
 export type PlantData = {
   model_path: string
   scale: number
+  y: number
 }
 
 export type PlantModels = {
@@ -59,38 +60,46 @@ export type PlantModels = {
 export const plantsModels: PlantModels = {
   "Cactus": {
     [PlantGrowthStage.Seed]: {
-      model_path: "/assets/models/cactus_seed.gltf",
-      scale: 0.1
+      model_path: "/cactus/cactus.glb",
+      scale: 1,
+      y: 1
     },
     [PlantGrowthStage.Sprout]: {
-      model_path: "/assets/models/cactus_sprout.gltf",
-      scale: 0.1
+      model_path: "/cactus/cactus.glb",
+      scale: 2,
+      y: 1
     },
     [PlantGrowthStage.Mature]: {
-      model_path: "/assets/models/cactus_mature.gltf",
-      scale: 0.1
+      model_path: "/cactus/cactus.glb",
+      scale: 3,
+      y: 1
     },
     [PlantGrowthStage.Harvestable]: {
-      model_path: "/assets/models/cactus_harvestable.gltf",
-      scale: 0.1
+      model_path: "/cactus/cactus.glb",
+      scale: 4,
+      y: 1
     }
   },
   "Wheat": {
     [PlantGrowthStage.Seed]: {
       model_path: "/wheat/scene.gltf",
-      scale: 4
+      scale: 4,
+      y: 1
     },
     [PlantGrowthStage.Sprout]: {
       model_path: "/wheat/scene.gltf",
-      scale: 6
+      scale: 6,
+      y: 1
     },
     [PlantGrowthStage.Mature]: {
       model_path: "/wheat/scene.gltf",
-      scale: 8
+      scale: 8,
+      y: 1
     },
     [PlantGrowthStage.Harvestable]: {
       model_path: " /wheat/scene.gltf",
-      scale: 10
+      scale: 10,
+      y: 1
     }
   }
 }
