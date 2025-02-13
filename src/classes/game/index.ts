@@ -1,26 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
-import { Plant } from "../../data/plants";
+import { defaultStartPlants, Plant } from "../../data/plants";
 import { MySkillData, myTree, SkillTree } from "../../data/skills";
 import Exp, { ExpStateUpdate } from "./exp";
 import { Dir, Field } from "./field";
-import { CellWetnesState, EmptyCell } from "./field/EmptyCell";
+import { EmptyCell } from "./field/EmptyCell";
 import { isPlantedCell, PlantedCell } from "./field/PlantedCell";
 import Skills from "./skills";
 import { PopUpData } from "../../sections/PopUp";
-
-const gameRuels = {
-  waterCost: 1,
-};
-
-const defaultStartPlants: Plant[] = [
-  {
-    title: "Wheat",
-    growthDuration: 20,
-    needWetStateToGrow: CellWetnesState.Dry,
-    plantCost: 1,
-    sellPrice: 5,
-  },
-];
 
 export interface SaveData {
   money: number;
@@ -29,26 +15,17 @@ export interface SaveData {
   playerPosition: [number, number];
   skillTree: SkillTree<MySkillData>;
   exp: number
+  waterCost: number
 }
 
 class Game {
-  money: number = 100;
+  money: number = 1000;
+  waterCost: number = 5;
   field = new Field([10, 10]);
   unlocks = new Skills<MySkillData>(myTree);
   unlockedPlants: Plant[] = defaultStartPlants;
   expUnlocks: Exp;
   playerCode: string = "";
-  /** Function(
-      move,
-      plant,
-      "remove",
-      "unlock",
-      "getPossibleUnlocks",
-      "water",
-      "getCurentCell",
-      "getMonney",
-      this.playerCode
-    ); */
   playerFunction: Function | null = null;
   constructor(addPopUp: Dispatch<SetStateAction<PopUpData | null>>, expUnlockState: Dispatch<SetStateAction<ExpStateUpdate>>, save?: SaveData) {
     if (save) {
@@ -57,6 +34,7 @@ class Game {
       this.unlocks = new Skills(save.skillTree);
       this.field.playerPosition = save.playerPosition;
       this.unlockedPlants = save.unlockedPlants;
+      this.waterCost = save.waterCost
     }
     this.expUnlocks = new Exp(save?.exp || 0, addPopUp, expUnlockState);
   }
@@ -100,8 +78,8 @@ class Game {
   }
 
   water() {
-    if (this.money >= gameRuels.waterCost) {
-      this.money -= gameRuels.waterCost;
+    if (this.money >= this.waterCost) {
+      this.money -= this.waterCost;
       this.field.water();
       this.expUnlocks.addExp(20);
     } else {
@@ -110,10 +88,14 @@ class Game {
   }
 
   unlockSkill(title: string) {
+    console.log(this.unlocks
+      .getPossibleToUnlock());
+    console.log(title);
     const tryingToUnlock = this.unlocks
       .getPossibleToUnlock()
       ?.find((el) => el.title === title);
 
+      console.log(tryingToUnlock);
     if (!tryingToUnlock) {
       throw new Error("Skill not found or can't be unlocked");
     }
@@ -122,8 +104,11 @@ class Game {
     }
 
     this.unlocks.setUnlockedByKey({ title }, true, true);
+    const gameInstance = this; // Capture reference
+    tryingToUnlock.unlock(gameInstance);
     this.money -= tryingToUnlock.cost;
   }
+
 
   getPossibleToUnlock() {
     return this.unlocks.getPossibleToUnlock();
@@ -154,19 +139,6 @@ class Game {
   }
 
   _runFunctionWithClassMethods() {
-    // return new Function(
-    //   "move",
-    //   "plant",
-    //   "harvest",
-    //   "remove",
-    //   "unlockSkill",
-    //   "getPossibleSkills",
-    //   "unlockedSkills",
-    //   "water",
-    //   "getCurentCell",
-    //   "getMonney",
-    //   this.playerCode
-    // );
     if (this.playerFunction)
       this.playerFunction(
         this.move.bind(this),
@@ -201,6 +173,7 @@ class Game {
       playerPosition: this.field.playerPosition,
       skillTree: this.unlocks.skillTree,
       exp: this.expUnlocks.exp,
+      waterCost: this.waterCost
     };
   }
 }

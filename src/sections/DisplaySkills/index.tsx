@@ -3,9 +3,11 @@ import { MySkillData, SkillTree } from "../../data/skills";
 import "./displaySkills.css";
 import DisplayTree from "./DisplayTree";
 import createLineByDOM from "../../utils/createLineByDOM";
+import Game from "../../classes/game";
 
 interface Props {
   tree: SkillTree<MySkillData> | MySkillData;
+  gameRef: React.RefObject<Game>; // Changed from game: Game to gameRef
 }
 
 // Refined isElement function acting as a type guard
@@ -71,25 +73,19 @@ function DisplaySkills(props: Props) {
 
   useEffect(() => {
     if (treeRef.current) {
-      setTimeout(() => {
+      setTimeout(() => { // timout to wait for the tree to render
         drawLines();
       }, 10);
-      // window.addEventListener("resize", handleResize);
-
-      // return () => {
-      //   window.removeEventListener("resize", handleResize);
-      // };
     }
-  }, []); // Removed 'treeRef' from dependencies as refs do not trigger re-renders
+  }, []);
 
   return (
     <div className="skills-wrapper" ref={treeRef}>
       <div
         className="skills"
-        // onScroll={handleResize}
         style={{ position: "relative" }}
       >
-        <DisplayTree tree={props.tree} deeps={0} />
+        <DisplayTree tree={props.tree} deeps={0} gameRef={props.gameRef} />
       </div>
     </div>
   );

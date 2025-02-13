@@ -16,7 +16,8 @@ export interface PropsPopUp {
 
 function PopUp(props: PropsPopUp) {
   const [popUpData, setPopUpData] = useState<PopUpData[]>([]);
-
+  console.log("new pop up data ",props.newPopUpData);
+  
   useEffect(() => {
     if (props.newPopUpData) {
       setPopUpData([...popUpData, props.newPopUpData])

@@ -1,5 +1,5 @@
 import Game from "../../classes/game";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PlantedCell } from "../../classes/game/field/PlantedCell";
 import { EmptyCell } from "../../classes/game/field/EmptyCell";
 import DisplayField from "../../sections/DisplayField";
@@ -9,7 +9,8 @@ import DisplaySkills from "../../sections/DisplaySkills";
 import { useParams } from "react-router";
 import { ExpStateUpdate } from "../../classes/game/exp";
 import ExpLvl from "./ExpLvl";
-import PopUp, { PopUpData } from "../../sections/PopUp";
+// import PopUp, { PopUpData } from "../../sections/PopUp";
+import { usePopUpContext } from "../../context/popUpContext";
 
 function GamePage() {
   const { isNewGame } = useParams();
@@ -21,7 +22,7 @@ function GamePage() {
     []
   );
   const [expState, setExpState] = useState<ExpStateUpdate>({exp: 0, lvl: 0, exp_this_lvl: 0});
-  const [newPopUp, setNewPopUp] = useState<PopUpData| null>(null);
+  const {newPopUp, setNewPopUp} = usePopUpContext();
 
   /** Once setting up game */
   useEffect(() => {
@@ -60,6 +61,7 @@ function GamePage() {
       intervalId = setInterval(() => {
         if (gameRef.current) {
           gameRef.current.execute(code.join("\n"));
+          gameRef.current.field.processTik();
           setFieldData([...gameRef.current.field.field]);
         }
       }, 1000);
@@ -82,24 +84,19 @@ function GamePage() {
   );
 
   const ExpLvlSection = useMemo(() => <ExpLvl expState={expState} updateExpState={setExpState} />, [expState]);
-  const PopUpMemo = useMemo(() => <PopUp newPopUpData={newPopUp} setNewPopUp={setNewPopUp} timeToWait={5000}/>, [newPopUp]);
-
+  // const PopUpMemo = useMemo(() => <PopUp newPopUpData={newPopUp} setNewPopUp={setNewPopUp} timeToWait={5000}/>, [newPopUp]);
+  const CodePannelMemo = useMemo(() => <CodePanel code={code} setCode={setCode} isExecuting={isExecuting} setIsExecuting={setIsExecuting} />, [code, isExecuting]);
 
   return (
     <>
       {gameRef.current && !isSkillDisplay && (
         <div id="Game" style={{ position: "absolute", top: 0, left: 0 }}>
           {fieldSection}
-          <CodePanel
-            code={code}
-            setCode={setCode}
-            isExecuting={isExecuting}
-            setIsExecuting={setIsExecuting} 
-          />
+          {CodePannelMemo}
         </div>
       )}
       {gameRef.current && isSkillDisplay && (
-        <DisplaySkills tree={gameRef.current.unlocks.skillTree} />
+        <DisplaySkills tree={gameRef.current.unlocks.skillTree} gameRef={gameRef as React.MutableRefObject<Game>} />
       )}
       <button
         onClick={() => setIsSkillDisplay(!isSkillDisplay)}
@@ -108,7 +105,7 @@ function GamePage() {
         Skills
       </button>
       {ExpLvlSection}
-      {PopUpMemo}
+      {/* {PopUpMemo} */}
     </>
   );
 }

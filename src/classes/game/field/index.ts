@@ -140,7 +140,7 @@ export class Field {
     }
 
     this.playerPosition = nextPossition;
-    this.processTik();
+    // this.processTik();
   }
 
   /** returning amount of monney made by harvesting courent field, changing courent cell to EmptyCell (Err !possible) */
@@ -172,6 +172,7 @@ export class Field {
   }
 
   deletPlant(position: [number, number] = this.playerPosition) {
+    console.log("deletPlant", this);
     const [x, y] = position;
     const fieldEl = this.field[x][y];
     this.field[x][y] = new EmptyCell({
@@ -201,7 +202,7 @@ export class Field {
         tiksUntilChangingWetnesState:
           this.field[x][y].tiksUntilChangingWetnesState,
       },
-      this.deletPlant
+      this.deletPlant.bind(this)
     );
   }
 }

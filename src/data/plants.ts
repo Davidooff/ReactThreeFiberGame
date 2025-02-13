@@ -18,20 +18,30 @@ export interface Plant {
   sellPrice: number
 }
 
+export const defaultStartPlants: Plant[] = [
+  {
+    title: 'Cactus',
+    growthDuration: 20,
+    needWetStateToGrow: CellWetnesState.Dry,
+    plantCost: 1,
+    sellPrice: 3,
+  },
+];
+
 const plantsData: Plant[] = [
   {
     title: 'Cactus',
-    growthDuration: 50,
+    growthDuration: 20,
     needWetStateToGrow: CellWetnesState.Dry,
     plantCost: 1,
-    sellPrice: 5,
+    sellPrice: 3,
   },
   {
     title: 'Wheat',
     growthDuration: 50,
     needWetStateToGrow: CellWetnesState.ReadyToPlant,
     plantCost: 5,
-    sellPrice: 20,
+    sellPrice: 40,
   },
 ]
 

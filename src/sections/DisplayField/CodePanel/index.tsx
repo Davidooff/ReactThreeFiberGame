@@ -23,7 +23,7 @@ function CodePanel(props: Props) {
 
   const addCodePanel = useCallback(() => {
     props.setCode([...props.code, ""]);
-  }, []);
+  }, [props.code]);
 
   return (
     <div className="code-panel">
@@ -37,10 +37,9 @@ function CodePanel(props: Props) {
       <div>
         {props.code.map((el, i) => {
           return (
-            <div className="code-el-wrapper">
+            <div className="code-el-wrapper" key={i}>
               <CodeMirror
                 className="code-el"
-                key={i}
                 id={"Panel" + i}
                 value={el}
                 extensions={[javascript()]}

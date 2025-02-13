@@ -18,6 +18,10 @@
   display: flex;
 }
 
+.skill-el-unlocked {
+  background-color: rgb(5, 29, 19);
+}
+
 .skill-el img {
   width: 64px;
   object-fit: contain;
