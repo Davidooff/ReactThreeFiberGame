@@ -1,7 +1,5 @@
 import Game from "../../classes/game";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { PlantedCell } from "../../classes/game/field/PlantedCell";
-import { EmptyCell } from "../../classes/game/field/EmptyCell";
 import DisplayField from "../../sections/DisplayField";
 import CodePanel from "../../sections/DisplayField/CodePanel";
 import "./game.css";
@@ -11,10 +9,13 @@ import { ExpStateUpdate } from "../../classes/game/exp";
 import ExpLvl from "./ExpLvl";
 // import PopUp, { PopUpData } from "../../sections/PopUp";
 import { usePopUpContext } from "../../context/popUpContext";
+import Maze from "../../classes/maze";
+import DisplayMaze from "../../sections/DisplayMaze";
 
 function GamePage() {
   const { isNewGame } = useParams();
   const gameRef = useRef<Game>();
+  const mazeRef = useRef<Maze>(new Maze([10, 10], 20));
   const [isSkillDisplay, setIsSkillDisplay] = useState(false);
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
   const [code, setCode] = useState<string[]>([""]);
@@ -50,6 +51,12 @@ function GamePage() {
     };
   }, []);
 
+  /** Rerendering field each time when skill tab are closed in case of field extending  */
+  useEffect(() => {
+    if (!isSkillDisplay)
+      setFieldReRender({});
+  }, [isSkillDisplay])
+
   /** Setting interval while isExecuting === true */
   useEffect(() => {
     let intervalId: number = 0;
@@ -81,6 +88,16 @@ function GamePage() {
     [fieldReRender]
   );
 
+  const mazeSection = useMemo(
+    () =>
+      mazeRef.current &&
+      DisplayMaze({
+        walls: mazeRef.current.walls,
+        playerPosition: mazeRef.current.player,
+      }),
+    [fieldReRender]
+  );
+
   const ExpLvlSection = useMemo(() => <ExpLvl expState={expState} updateExpState={setExpState} />, [expState]);
   // const PopUpMemo = useMemo(() => <PopUp newPopUpData={newPopUp} setNewPopUp={setNewPopUp} timeToWait={5000}/>, [newPopUp]);
   const CodePannelMemo = useMemo(() => <CodePanel code={code} setCode={setCode} isExecuting={isExecuting} setIsExecuting={setIsExecuting} />, [code, isExecuting]);
@@ -89,7 +106,8 @@ function GamePage() {
     <>
       {gameRef.current && !isSkillDisplay && (
         <div id="Game" style={{ position: "absolute", top: 0, left: 0 }}>
-          {fieldSection}
+          {mazeRef.current && mazeSection}
+          {!mazeRef.current && fieldSection}
           {CodePannelMemo}
         </div>
       )}
