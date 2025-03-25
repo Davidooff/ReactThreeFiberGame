@@ -15,7 +15,8 @@ import DisplayMaze from "../../sections/DisplayMaze";
 function GamePage() {
   const { isNewGame } = useParams();
   const gameRef = useRef<Game>();
-  const mazeRef = useRef<Maze>(new Maze([10, 10], 20));
+  const mazeRef = useRef<Maze>();
+  // const mazeRef = useRef<Maze>(new Maze([10, 10], 20)); //its for testing 
   const [isSkillDisplay, setIsSkillDisplay] = useState(false);
   const [isExecuting, setIsExecuting] = useState<boolean>(false);
   const [code, setCode] = useState<string[]>([""]);
@@ -37,6 +38,8 @@ function GamePage() {
     } else {
       gameRef.current = new Game(setNewPopUp, setExpState);
     }
+
+    mazeRef.current = new Maze([10, 10], 20)
 
     const handleBeforeUnload = () => {
       // Serialize and save data
@@ -61,15 +64,28 @@ function GamePage() {
   useEffect(() => {
     let intervalId: number = 0;
     if (isExecuting) {
-      intervalId = setInterval(() => {
-        if (gameRef.current) {
-          gameRef.current.execute(code.join("\n"));
-          gameRef.current.field.processTik();
-          // Trigger a re-render by updating fieldReRender
-          console.log("re-render", gameRef.current.field.field);
+      if (mazeRef.current){
+        intervalId = setInterval(() => {
+          mazeRef.current?.execute(code.join("\n"));
+          
+          if (mazeRef.current?.isDone()) {
+            console.log("Don Don")
+            mazeRef.current = undefined;
+            clearInterval(intervalId);
+          }
           setFieldReRender({});
-        }
-      }, 1000);
+        }, 1000);
+      }else {
+        intervalId = setInterval(() => {
+          if (gameRef.current) {
+            gameRef.current.execute(code.join("\n"));
+            gameRef.current.field.processTik();
+            // Trigger a re-render by updating fieldReRender
+            console.log("re-render", gameRef.current.field.field);
+            setFieldReRender({});
+          }
+        }, 1000);
+      }
     } else {
       if (intervalId) {
         clearInterval(intervalId);

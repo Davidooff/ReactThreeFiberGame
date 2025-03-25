@@ -7,6 +7,7 @@ import { EmptyCell } from "./field/EmptyCell";
 import { isPlantedCell, PlantedCell } from "./field/PlantedCell";
 import Skills from "./skills";
 import { PopUpData } from "../../sections/PopUp";
+import Executable from "../subClasses/executable";
 
 export interface SaveData {
   money: number;
@@ -18,16 +19,31 @@ export interface SaveData {
   waterCost: number
 }
 
-class Game {
+
+class Game extends Executable {
   money: number = 1000;
   waterCost: number = 5;
   field = new Field([10, 10]);
+
   unlocks = new Skills<MySkillData>(myTree);
   unlockedPlants: Plant[] = defaultStartPlants;
+  
   expUnlocks: Exp;
-  playerCode: string = "";
-  playerFunction: Function | null = null;
+
   constructor(addPopUp: Dispatch<SetStateAction<PopUpData | null>>, expUnlockState: Dispatch<SetStateAction<ExpStateUpdate>>, save?: SaveData) {
+    super(false);
+    this.setMethods([
+      "move",
+      "plant",
+      "harvest",
+      "removePlant",         
+      "unlockSkill",
+      "getPossibleToUnlock", 
+      "water",
+      "getCurentCell",
+      "getMonney",
+    ]); // Set methods for Executable super class
+
     if (save) {
       this.money = save.money;
       this.field = new Field([0, 0], save.fieldData);
@@ -37,22 +53,6 @@ class Game {
       this.waterCost = save.waterCost
     }
     this.expUnlocks = new Exp(save?.exp || 0, addPopUp, expUnlockState);
-  }
-
-  createUserFunction(): Function {
-    return new Function(
-      "move",
-      "plant",
-      "harvest",
-      "remove",
-      "unlockSkill",
-      "getPossibleSkills",
-      "unlockedSkills",
-      "water",
-      "getCurentCell",
-      "getMonney",
-      this.playerCode
-    );
   }
 
   move(direction: Dir) {
@@ -136,33 +136,6 @@ class Game {
 
   getMonney(): number {
     return this.money;
-  }
-
-  _runFunctionWithClassMethods() {
-    if (this.playerFunction)
-      this.playerFunction(
-        this.move.bind(this),
-        this.plant.bind(this),
-        this.harvest.bind(this),
-        this.removePlant.bind(this),
-        this.unlockSkill.bind(this),
-        this.getPossibleToUnlock.bind(this),
-        this.getPossibleToUnlock.bind(this),
-        this.water.bind(this),
-        this.getCurentCell.bind(this),
-        this.getMonney.bind(this),
-        this.playerCode
-      );
-    else throw new Error("Player function not deffined");
-  }
-
-  execute(code: string) {
-    if (code != this.playerCode) {
-      this.playerCode = code;
-      this.playerFunction = this.createUserFunction();
-    }
-    // eval(this.playerCode);
-    this._runFunctionWithClassMethods();
   }
 
   getSave(): SaveData {

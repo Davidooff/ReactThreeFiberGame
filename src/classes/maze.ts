@@ -1,4 +1,5 @@
 import { Dir } from "./game/field";
+import Executable from "./subClasses/executable";
 
 function getRandomInt(min: number,max: number): number {  // inluding max and min val
 return min + Math.floor(Math.random() * (max - min + 1));
@@ -10,6 +11,10 @@ walls -
     second index y (second demention) - showing the possition of wall
     0 - first column, 1 - second column, 2 - third column ...
     
+    ((
+        Its made just for make it harder for user to tech him how 
+        to program in memry bound enviroment 
+    ))
 walls[x][y]
          0 1 2 3 4 5
         0 1 2 3 4 5
@@ -21,11 +26,14 @@ walls[x][y]
  3 |    | | | | | | |
 x \/     - - - - - - -
 */
-class Maze {
+class Maze extends Executable {
     walls: Array<boolean[]>; // 0 - empty, 1 - walls
-    player: [number, number]
-    size: [number, number]
+    player: [number, number];
+    size: [number, number];
     constructor(size: [number, number], path_length: number) {
+        super(true);
+        this.setMethods(["move", "get_walls"]);
+
         let generated_spots: number[][] = Array.from(
             { length: size[0] },
             () => new Array(size[1]).fill(0)
@@ -127,42 +135,14 @@ class Maze {
         } 
 
         for(let el of generated_spots) {
-            console.log(el)
+            console.log("el of generated_spots", el)
         }
 
         console.log(possible_starts)
     }
 
     isDone(): boolean {
-        return Math.min(...this.player) < 0 || this.player[0] == this.size[0] || this.player[1] == this.size[1]
-    }
-
-    move(dir: Dir) {
-        let next_move: [number, number] = [0, 0];
-        switch (dir) {
-            case Dir.Up:
-                next_move = [this.player[0] - 1, this.player[1]];
-                break;
-            case Dir.Down:
-                next_move = [this.player[0] + 1, this.player[1]];
-                break;
-            case Dir.Left:
-                next_move = [this.player[0], this.player[1] - 1];
-                break;
-            case Dir.Right:
-                next_move = [this.player[0], this.player[1] + 1];
-                break;
-
-            default:
-                throw new Error("No such dir as " + dir);
-        }
-
-        let wall_possition = this.find_wall_possition_between(this.player, next_move)
-        if (this.walls[wall_possition[0]][wall_possition[1]]) {
-            throw new Error("Can't move there")
-        }
-
-        this.player = next_move
+        return Math.min(...this.player) < 0 || this.player[0] > this.size[0] - 1 || this.player[1] > this.size[1] - 1
     }
 
     set_wall(possition: [number, number], join_with: [number, number], set_on: boolean = false){
@@ -201,6 +181,39 @@ class Maze {
 
     is_it_near_border(possition: [number, number]) {
         return possition[0] == 0 || possition[1] == 0 || possition[0] == this.size[0] - 1 || possition[1] == this.size[0] - 1
+    }
+
+    // Methods for player (Executable)
+    move(dir: Dir) {
+        let next_move: [number, number] = [0, 0];
+        switch (dir) {
+            case Dir.Up:
+                next_move = [this.player[0] + 1, this.player[1]];
+                break;
+            case Dir.Down:
+                next_move = [this.player[0] - 1, this.player[1]];
+                break;
+            case Dir.Left:
+                next_move = [this.player[0], this.player[1] - 1];
+                break;
+            case Dir.Right:
+                next_move = [this.player[0], this.player[1] + 1];
+                break;
+
+            default:
+                throw new Error("No such dir as " + dir);
+        }
+
+        let wall_possition = this.find_wall_possition_between(this.player, next_move)
+        if (this.walls[wall_possition[0]][wall_possition[1]]) {
+            throw new Error("Can't move there")
+        }
+
+        this.player = next_move
+    }
+
+    get_walls() {
+        return this.walls
     }
 }
 
